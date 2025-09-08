@@ -1,6 +1,7 @@
 import os
 import numpy as np
 import copy
+import getch
 
 key_ammount = 0; moves_allowed = 0; map_index = 0
 x_coord = 12; y_coord = 11
@@ -52,7 +53,7 @@ lvl02 = np.array([['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '
                   ['.', '.', '.', '.', '.', '.', '.', '╚', '═', '═', '═', '═', '═', '╝', '.', '.', '.', '.', '.', '.', '.'],
                   ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
                   ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
-                  ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.']])
+                  ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],])
 lvl02_start = copy.deepcopy(lvl02)
 
 lvl03 = np.array([['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
@@ -118,6 +119,11 @@ def print_level(level):
             for j in range(x_coord - 2, x_coord + 3):
                 print(LEVELS[map_index][i, j], end=" ")
             print()
+    elif mode == 3:
+        for i in range(y_coord - 1, y_coord + 2):
+            for j in range(x_coord - 1, x_coord + 2):
+                print(LEVELS[map_index][i, j], end=" ")
+            print()
     else:
         for i in range(y_coord - 4, y_coord + 5):
             for j in range(x_coord - 4, x_coord + 5):
@@ -177,21 +183,21 @@ def character_movement(x_dir, y_dir):
 
 def character_input():
     global key_ammount, map_index, y_coord, x_coord, moves_allowed
-    action = input("Input an action: ")
-    if action == "restart":
+    action = getch.getch()
+    if action == "r":
         moves_allowed = 0
         key_ammount = 0
         x_coord, y_coord = coords[map_index, 0], coords[map_index, 1]
         LEVELS[map_index] = copy.deepcopy(LEVELS_START[map_index])
-    elif action == "up" or action == "u":
+    elif action  == "w":
         character_movement(0, -1)
-    elif action == "down" or action == "d":
+    elif action == "s":
         character_movement(0, 1)
-    elif action == "left" or action == "l":
+    elif action == "a":
         character_movement(-1, 0)
-    elif action == "right" or action == "r":
+    elif action == "d":
         character_movement(1, 0)
-    elif action == "next":
+    elif action == "n":
         map_index += 1
         key_ammount = 0
         x_coord, y_coord = coords[map_index, 0], coords[map_index, 1]
@@ -201,12 +207,15 @@ os.system("clear")
 print("1. Easy")
 print("2. Medium")
 print("3. Hard")
+print("4. Impossible")
 dif = input("Select difficulty: ")
 
 if dif == "1":
     mode = 1
 elif dif == "3":
     mode = 2
+elif dif == "4":
+    mode = 3
 
 while True:
     print_level(LEVELS[map_index])
