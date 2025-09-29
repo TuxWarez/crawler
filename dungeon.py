@@ -289,6 +289,8 @@ def character_input():
         return
     elif action == "n":
         map_index += 1
+        if map_index > len(LEVELS) - 1:
+            map_index = 0
         key_ammount = 0
         x_coord, y_coord = coords[map_index, 0], coords[map_index, 1]
         move_count = 0
