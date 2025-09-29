@@ -1,5 +1,5 @@
 import numpy as np
-import copy, os, getch
+import copy, os, getch, sys
 
 key_ammount = 0; move_count = 0; map_index = 0
 barrel_spawned = 0; deadly_floor = [0, 1, 2]; pure_deadly_floor = 2; pure_deadly_floor_plus = 3
@@ -173,9 +173,15 @@ lvl07_start = copy.deepcopy(lvl07)
 LEVELS = np.array([lvl01, lvl02, lvl03, lvl04, lvl05, lvl06, lvl07])
 LEVELS_START = np.array([lvl01_start, lvl02_start, lvl03_start, lvl04_start, lvl05_start, lvl06_start, lvl07_start])
 
+def clear_screen():
+    if sys.platform == "win32":
+        os.system("cls")
+        return
+    os.system("clear")
+
 def print_level(level):
     global mode
-    os.system("clear")
+    clear_screen()
     if mode == 1:
         for i in range(3, 18):
             for j in range(3, 18):
@@ -367,7 +373,7 @@ def map_specific_events():
         if LEVELS[map_index][10, 11] == "@":
             input('Game made by: Rhea "Tuxware"')
 
-os.system("clear")
+clear_screen()
 print("1. Easy")
 print("2. Medium")
 print("3. Hard")
@@ -386,3 +392,4 @@ while True:
     if tic == True:
         map_specific_events()
     character_input()
+    print(os.uname())
