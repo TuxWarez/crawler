@@ -392,4 +392,3 @@ while True:
     if tic == True:
         map_specific_events()
     character_input()
-    print(os.uname())
