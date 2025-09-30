@@ -304,7 +304,7 @@ def character_input():
         print("@ - Player")
         print("K - Key")
         print("H - Hole: Kills the player, can be filled by a box")
-        print("o/O - Button: Can be pushed by a button")
+        print("o/O - Ground button: Can be pushed by a box")
         print("D - Door: Needs a key to open it and takes one from you")
         print("B - Box: Used for filling holes and pressing buttons")
         print("* - Deadly tile: Kills the player and destroys boxes")
