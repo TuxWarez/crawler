@@ -310,6 +310,7 @@ def character_input():
         move_count = 0
         return
     elif action == "h":
+        clear_screen()
         print("Legend for the game:")
         print("@ - Player")
         print("K - Key")
@@ -322,7 +323,7 @@ def character_input():
         print("WASD for movement of the player")
         print("R to restart level")
         print("N and P to go to the next and previous level respectevely")
-        input("Press Enter to exit ")
+        input("Press Enter to exit this screen")
     tic = False
 
 def map_specific_events():
