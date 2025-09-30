@@ -188,12 +188,12 @@ def print_level(level):
             for j in range(3, 18):
                 print(LEVELS[map_index][i, j], end=" ")
             print()
-    elif mode == 2:
+    elif mode == 3:
         for i in range(y_coord - 2, y_coord + 3):
             for j in range(x_coord - 2, x_coord + 3):
                 print(LEVELS[map_index][i, j], end=" ")
             print()
-    elif mode == 3:
+    elif mode == 4:
         for i in range(y_coord - 1, y_coord + 2):
             for j in range(x_coord - 1, x_coord + 2):
                 print(LEVELS[map_index][i, j], end=" ")
@@ -278,7 +278,7 @@ def character_movement(x_dir, y_dir):
     tic = True
 
 def character_input():
-    global key_ammount, map_index, y_coord, x_coord, move_count, tic, showpos, noclip, god
+    global key_ammount, map_index, y_coord, x_coord, move_count, tic, showpos, noclip, god, mode
     action = getch.getch()
     if action == "r":
         move_count = 0
@@ -364,6 +364,11 @@ def character_input():
                     input("No arguments present: ")
                     return
                 key_ammount += int(command[1])
+            elif command[0] == "changedif":
+                if len(command) < 2:
+                    input("No arguments present: ")
+                    return
+                mode = int(command[1])
         except ValueError:
                 input("There is no digit")
     tic = False
@@ -448,9 +453,9 @@ dif = input("Select difficulty: ")
 if dif == "1":
     mode = 1
 elif dif == "3":
-    mode = 2
-elif dif == "4":
     mode = 3
+elif dif == "4":
+    mode = 4
 
 while True:
     print_level(LEVELS[map_index])
