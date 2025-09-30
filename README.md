@@ -20,3 +20,5 @@ Console Instructions:
 `noclip` \[0|1] - Disables the collision of the player  
 `god` \[0|1] - Makes the player invincible  
 `summon` \[Character] - Spawns a character below the player  
+`givekey` \[ammount] - Gives a specified ammount of keys to the player  
+`changedif` \[1|2|3|4] - Changes the difficulty on the fly
