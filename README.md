@@ -9,6 +9,7 @@ B - Box: Used for filling holes and pressing buttons
 Controls:  
 WASD for movement of the player  
 R to restart level  
+H to open a help menu  
 C to open a console for which you can find instructions below
   
 Console Instructions:  
