@@ -220,7 +220,7 @@ def character_movement(x_dir, y_dir):
         tic = False
         return
     elif LEVELS[map_index][y_coord + y_dir, x_coord + x_dir] == "D":
-        if key_ammount == 0:
+        if key_ammount == 0 and noclip == 0:
             move_count -= 1
             tic = False
             return
@@ -271,7 +271,10 @@ def character_movement(x_dir, y_dir):
         return
     x_coord += x_dir; y_coord += y_dir
     LEVELS[map_index][y_coord, x_coord] = "@"
-    LEVELS[map_index][y_coord - y_dir, x_coord - x_dir] = "."
+    if LEVELS[map_index][y_coord - y_dir, x_coord - x_dir] != "*":
+        LEVELS[map_index][y_coord - y_dir, x_coord - x_dir] = "."
+    if noclip == 1:
+         LEVELS[map_index][y_coord - y_dir, x_coord - x_dir] = LEVELS_START[map_index][y_coord - y_dir, x_coord - x_dir]
     tic = True
 
 def character_input():
@@ -356,6 +359,11 @@ def character_input():
                     input("No arguments present: ")
                     return
                 LEVELS[map_index][y_coord + 1, x_coord] = command[1]
+            elif command[0] == "givekey":
+                if len(command) < 2:
+                    input("No arguments present: ")
+                    return
+                key_ammount += int(command[1])
         except ValueError:
                 input("There is no digit")
     tic = False
