@@ -6,6 +6,7 @@ barrel_spawned = 0; deadly_floor = [0, 1, 2]; pure_deadly_floor = 2; pure_deadly
 x_coord = 12; y_coord = 11
 coords = np.array([[12, 11], [10, 10], [4, 13], [4, 15], [5, 13], [10, 14], [9, 11]])
 mode = 0; tic = True
+showpos = 0; noclip = 0; god = 0
 WALLS = np.array(['═', '║', '╚', '╝', '╔', '╗', '╠', '╣', '╩', '╦'])
 LEVEL_TITLECARD = np.array(["LVL01: Introduction", "LVL02: Four way", "LVL03: Boxes", "LVL04: Buttons", "LVL05: Barb Wire", "LVL06: Teleportation", "THX: Thanks for playing!"])
 
@@ -180,7 +181,7 @@ def clear_screen():
     os.system("clear")
 
 def print_level(level):
-    global mode
+    global mode, showpos
     clear_screen()
     if mode == 1:
         for i in range(3, 18):
@@ -204,12 +205,17 @@ def print_level(level):
             print()
     print(LEVEL_TITLECARD[map_index])
     print(f"KEYS={key_ammount} MOVES={move_count}")
-    # print(x_coord, y_coord)
+    if showpos == 1:
+        print(f"{x_coord}, {y_coord}")
 
 def character_movement(x_dir, y_dir):
-    global key_ammount, map_index, y_coord, x_coord, move_count, barrel_spawned, tic
+    global key_ammount, map_index, y_coord, x_coord, move_count, barrel_spawned, tic, noclip, god
     move_count += 1
-    if LEVELS[map_index][y_coord + y_dir, x_coord + x_dir] in WALLS:
+    if (LEVELS[map_index][y_coord + y_dir, x_coord + x_dir] in WALLS or y_coord + y_dir == 17 or LEVELS[map_index][y_coord + y_dir, x_coord + x_dir] == "o") and noclip == 0:
+        move_count -= 1
+        tic = False
+        return
+    elif x_coord + x_dir == 17 or y_coord + y_dir == 17 or y_coord + y_dir == -18 or x_coord + x_dir == -18:
         move_count -= 1
         tic = False
         return
@@ -219,7 +225,7 @@ def character_movement(x_dir, y_dir):
             tic = False
             return
         key_ammount -= 1
-    elif LEVELS[map_index][y_coord + y_dir, x_coord + x_dir] == "B":
+    elif LEVELS[map_index][y_coord + y_dir, x_coord + x_dir] == "B" and noclip == 0:
         while True:
             if LEVELS[map_index][y_coord + y_dir + y_dir, x_coord + x_dir + x_dir] in WALLS or LEVELS[map_index][y_coord + y_dir + y_dir, x_coord + x_dir + x_dir] == "B":
                 move_count -= 1
@@ -235,7 +241,7 @@ def character_movement(x_dir, y_dir):
             break
     elif LEVELS[map_index][y_coord + y_dir, x_coord + x_dir] == "K":
         key_ammount += 1
-    elif LEVELS[map_index][y_coord + y_dir, x_coord + x_dir] == "H":
+    elif LEVELS[map_index][y_coord + y_dir, x_coord + x_dir] == "H" and god == 0:
         input("You fell down a hole...")
         move_count = 0
         key_ammount = 0
@@ -243,24 +249,18 @@ def character_movement(x_dir, y_dir):
         x_coord, y_coord = coords[map_index, 0], coords[map_index, 1]
         LEVELS[map_index] = copy.deepcopy(LEVELS_START[map_index])
         return
-    elif LEVELS[map_index][y_coord + y_dir, x_coord + x_dir] == "*":
+    elif LEVELS[map_index][y_coord + y_dir, x_coord + x_dir] == "*" and god == 0:
+        LEVELS[map_index][y_coord + y_dir, x_coord + x_dir] == "X"
         print_level(LEVELS[map_index])
-        input("The floor killed you...")
+        input("You Died...")
         move_count = 0
         key_ammount = 0
         barrel_spawned = 0
         x_coord, y_coord = coords[map_index, 0], coords[map_index, 1]
         LEVELS[map_index] = copy.deepcopy(LEVELS_START[map_index])
         return
-    elif LEVELS[map_index][y_coord + y_dir, x_coord + x_dir] == "o":
-        input("The button killed you...")
-        move_count = 0
-        key_ammount = 0
-        barrel_spawned = 0
-        x_coord, y_coord = coords[map_index, 0], coords[map_index, 1]
+    elif LEVELS[map_index][y_coord + y_dir, x_coord + x_dir] == "E" and noclip == 0:
         LEVELS[map_index] = copy.deepcopy(LEVELS_START[map_index])
-        return
-    elif LEVELS[map_index][y_coord + y_dir, x_coord + x_dir] == "E":
         map_index += 1
         x_coord, y_coord = coords[map_index, 0], coords[map_index, 1]
         move_count = 0
@@ -273,7 +273,7 @@ def character_movement(x_dir, y_dir):
     tic = True
 
 def character_input():
-    global key_ammount, map_index, y_coord, x_coord, move_count, tic
+    global key_ammount, map_index, y_coord, x_coord, move_count, tic, showpos, noclip, god
     action = getch.getch()
     if action == "r":
         move_count = 0
@@ -293,37 +293,69 @@ def character_input():
     elif action == "d":
         character_movement(1, 0)
         return
-    elif action == "n":
-        map_index += 1
-        if map_index > len(LEVELS) - 1:
-            map_index = 0
-        key_ammount = 0
-        x_coord, y_coord = coords[map_index, 0], coords[map_index, 1]
-        move_count = 0
-        return
-    elif action == "p":
-        map_index -= 1
-        if map_index < 0:
-            map_index = len(LEVELS) - 1
-        key_ammount = 0
-        x_coord, y_coord = coords[map_index, 0], coords[map_index, 1]
-        move_count = 0
-        return
     elif action == "h":
         clear_screen()
         print("Legend for the game:")
         print("@ - Player")
         print("K - Key")
         print("H - Hole: Kills the player, can be filled by a box")
-        print("o/O - Button: Kills the player, can be pushed by a button")
+        print("o/O - Button: Can be pushed by a button")
         print("D - Door: Needs a key to open it and takes one fronm you")
         print("B - Box: Used for filling holes and pressing buttons")
         print("* - Deadly tile: Kills the player and destroys boxes")
         print("Controls:")
         print("WASD for movement of the player")
         print("R to restart level")
-        print("N and P to go to the next and previous level respectevely")
+        print("C for the console, where you can find instructions on the github page")
         input("Press Enter to exit this screen")
+    elif action == "c":
+        print("Input a command:")
+        try:
+            command = input().split(" ")
+            if command[0] == "changelvl":
+                if len(command) < 2:
+                    input("No arguments present: ")
+                    return
+                elif int(command[1]) > len(LEVELS):
+                    input("Map of that index doesnt exist: ")
+                    return
+                map_index = int(command[1]) - 1
+                key_ammount = 0
+                x_coord, y_coord = coords[map_index, 0], coords[map_index, 1]
+                move_count = 0
+            elif command[0] == "setpos":
+                if len(command) < 3:
+                    input("Not enough arguments present: ")
+                    return
+                LEVELS[map_index][y_coord, x_coord] = "."
+                x_coord, y_coord = int(command[1]) + 3, int(command[2]) + 3
+                LEVELS[map_index][y_coord, x_coord] = "@"
+            elif command[0] == "startpos":
+                LEVELS[map_index][y_coord, x_coord] = "."
+                x_coord, y_coord = coords[map_index, 0], coords[map_index, 1]
+                LEVELS[map_index][y_coord, x_coord] = "@"
+            elif command[0] == "showpos":
+                if len(command) < 2:
+                    input("No arguments present: ")
+                    return
+                showpos = int(command[1])
+            elif command[0] == "noclip":
+                if len(command) < 2:
+                    input("No arguments present: ")
+                    return
+                noclip = int(command[1])
+            elif command[0] == "god":
+                if len(command) < 2:
+                    input("No arguments present: ")
+                    return
+                god = int(command[1])
+            elif command[0] == "summon":
+                if len(command) < 2:
+                    input("No arguments present: ")
+                    return
+                LEVELS[map_index][y_coord + 1, x_coord] = command[1]
+        except ValueError:
+                input("There is no digit")
     tic = False
 
 def map_specific_events():
