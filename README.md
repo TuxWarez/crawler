@@ -9,4 +9,13 @@ B - Box: Used for filling holes and pressing buttons
 Controls:  
 WASD for movement of the player  
 R to restart level  
-N and P to go to the next and previous level respectevely  
+C to open a console for which you can find instructions below
+  
+Console Instructions:  
+`changelvl` \[level number] - Changes the level  
+`setpos` \[x-coord y-coord] - Changes the position of the player  
+`startpos` \[no arguments] - Sets the player position to the starting position  
+`showpos` \[0|1] - Shows the coordinates of the player  
+`noclip` \[0|1] - Disables the collision of the player  
+`god` \[0|1] - Makes the player invincible  
+`summon` \[Character] - Spawns a character below the player  
