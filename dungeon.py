@@ -242,6 +242,8 @@ def character_movement(x_dir, y_dir):
     elif LEVELS[map_index][y_coord + y_dir, x_coord + x_dir] == "K":
         key_ammount += 1
     elif LEVELS[map_index][y_coord + y_dir, x_coord + x_dir] == "H" and god == 0:
+        LEVELS[map_index][y_coord, x_coord] = "X"
+        print_level(LEVELS[map_index])
         input("You fell down a hole...")
         move_count = 0
         key_ammount = 0
@@ -250,7 +252,7 @@ def character_movement(x_dir, y_dir):
         LEVELS[map_index] = copy.deepcopy(LEVELS_START[map_index])
         return
     elif LEVELS[map_index][y_coord + y_dir, x_coord + x_dir] == "*" and god == 0:
-        LEVELS[map_index][y_coord + y_dir, x_coord + x_dir] == "X"
+        LEVELS[map_index][y_coord, x_coord] = "X"
         print_level(LEVELS[map_index])
         input("You Died...")
         move_count = 0
@@ -300,13 +302,13 @@ def character_input():
         print("K - Key")
         print("H - Hole: Kills the player, can be filled by a box")
         print("o/O - Button: Can be pushed by a button")
-        print("D - Door: Needs a key to open it and takes one fronm you")
+        print("D - Door: Needs a key to open it and takes one from you")
         print("B - Box: Used for filling holes and pressing buttons")
         print("* - Deadly tile: Kills the player and destroys boxes")
         print("Controls:")
         print("WASD for movement of the player")
         print("R to restart level")
-        print("C for the console, where you can find instructions on the github page")
+        print("C for the console, for which you can find instructions on the github page")
         input("Press Enter to exit this screen")
     elif action == "c":
         print("Input a command:")
