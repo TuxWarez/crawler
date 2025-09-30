@@ -301,6 +301,28 @@ def character_input():
         x_coord, y_coord = coords[map_index, 0], coords[map_index, 1]
         move_count = 0
         return
+    elif action == "p":
+        map_index -= 1
+        if map_index < 0:
+            map_index = len(LEVELS) - 1
+        key_ammount = 0
+        x_coord, y_coord = coords[map_index, 0], coords[map_index, 1]
+        move_count = 0
+        return
+    elif action == "h":
+        print("Legend for the game:")
+        print("@ - Player")
+        print("K - Key")
+        print("H - Hole: Kills the player, can be filled by a box")
+        print("o/O - Button: Kills the player, can be pushed by a button")
+        print("D - Door: Needs a key to open it and takes one fronm you")
+        print("B - Box: Used for filling holes and pressing buttons")
+        print("* - Deadly tile: Kills the player and destroys boxes")
+        print("Controls:")
+        print("WASD for movement of the player")
+        print("R to restart level")
+        print("N and P to go to the next and previous level respectevely")
+        input("Press Enter to exit ")
     tic = False
 
 def map_specific_events():
