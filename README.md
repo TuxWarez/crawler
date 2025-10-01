@@ -19,8 +19,8 @@ Console Instructions:
 `showpos` \[0|1] - Shows the coordinates of the player  
 `noclip` \[0|1] - Disables the collision of the player  
 `god` \[0|1] - Makes the player invincible  
-`summon` \[Character] optional\[x-coord] optional\[y-coord]- Summons a character below the player; if the coordinates are present, it summons a character at the specified coordinates
+`summon` \[Character] optional\[x-coord] optional\[y-coord]- Summons a character below the player; if the coordinates are present, it summons a character at the specified coordinates  
 `setkey` \[ammount] - Sets a specified ammount of keys in the player inventory  
-`changedif` \[1|2|3|4] - Changes the difficulty on the fly
+`changedif` \[1|2|3|4] - Changes the difficulty on the fly  
 `setmove` \[ammount] - Sets a specified ammount of moves in the player inventory   
 `space` \[0|1] - Sets if there will be space in between characters  
