@@ -280,25 +280,25 @@ def character_movement(x_dir, y_dir):
 def character_input():
     global key_ammount, map_index, y_coord, x_coord, move_count, tic, showpos, noclip, god, mode, space
     action = getch.getch()
-    if action == "r":
+    if action == "r" or action == "R":
         move_count = 0
         key_ammount = 0
         x_coord, y_coord = coords[map_index, 0], coords[map_index, 1]
         LEVELS[map_index] = copy.deepcopy(LEVELS_START[map_index])
         return
-    elif action  == "w":
+    elif action  == "w" or action == "W":
         character_movement(0, -1)
         return
-    elif action == "s":
+    elif action == "s" or action == "S":
         character_movement(0, 1)
         return
-    elif action == "a":
+    elif action == "a" or action == "A":
         character_movement(-1, 0)
         return
-    elif action == "d":
+    elif action == "d" or action == "D":
         character_movement(1, 0)
         return
-    elif action == "h":
+    elif action == "h" or action == "H":
         clear_screen()
         print("Legend for the game:")
         print("@ - Player")
@@ -313,7 +313,7 @@ def character_input():
         print("R to restart level")
         print("C for the console, for which you can find instructions on the github page")
         input("Press Enter to exit this screen")
-    elif action == "c":
+    elif action == "c" or action == "C":
         print("Input a command:")
         try:
             command = input().split(" ")
