@@ -5,7 +5,7 @@ key_ammount = 0; move_count = 0; map_index = 0
 barrel_spawned = 0; deadly_floor = [0, 1, 2]; pure_deadly_floor = 2; pure_deadly_floor_plus = 3
 x_coord = 12; y_coord = 11
 coords = np.array([[12, 11], [10, 10], [4, 13], [4, 15], [5, 13], [10, 14], [9, 11]])
-mode = 0; tic = True
+mode = 0; tic = True; space = " "
 showpos = 0; noclip = 0; god = 0
 WALLS = np.array(['═', '║', '╚', '╝', '╔', '╗', '╠', '╣', '╩', '╦'])
 LEVEL_TITLECARD = np.array(["LVL01: Introduction", "LVL02: Four way", "LVL03: Boxes", "LVL04: Buttons", "LVL05: Barb Wire", "LVL06: Teleportation", "THX: Thanks for playing!"])
@@ -181,27 +181,27 @@ def clear_screen():
     os.system("clear")
 
 def print_level(level):
-    global mode, showpos
+    global mode, showpos, space
     clear_screen()
     if mode == 1:
         for i in range(3, 18):
             for j in range(3, 18):
-                print(LEVELS[map_index][i, j], end=" ")
+                print(LEVELS[map_index][i, j], end=space)
             print()
     elif mode == 3:
         for i in range(y_coord - 2, y_coord + 3):
             for j in range(x_coord - 2, x_coord + 3):
-                print(LEVELS[map_index][i, j], end=" ")
+                print(LEVELS[map_index][i, j], end=space)
             print()
     elif mode == 4:
         for i in range(y_coord - 1, y_coord + 2):
             for j in range(x_coord - 1, x_coord + 2):
-                print(LEVELS[map_index][i, j], end=" ")
+                print(LEVELS[map_index][i, j], end=space)
             print()
     else:
         for i in range(y_coord - 4, y_coord + 5):
             for j in range(x_coord - 4, x_coord + 5):
-                print(LEVELS[map_index][i, j], end=" ")
+                print(LEVELS[map_index][i, j], end=space)
             print()
     print(LEVEL_TITLECARD[map_index])
     print(f"KEYS={key_ammount} MOVES={move_count}")
@@ -278,7 +278,7 @@ def character_movement(x_dir, y_dir):
     tic = True
 
 def character_input():
-    global key_ammount, map_index, y_coord, x_coord, move_count, tic, showpos, noclip, god, mode
+    global key_ammount, map_index, y_coord, x_coord, move_count, tic, showpos, noclip, god, mode, space
     action = getch.getch()
     if action == "r":
         move_count = 0
@@ -319,10 +319,10 @@ def character_input():
             command = input().split(" ")
             if command[0] == "changelvl":
                 if len(command) < 2:
-                    input("No arguments present: ")
+                    input("No arguments present")
                     return
                 elif int(command[1]) > len(LEVELS):
-                    input("Map of that index doesnt exist: ")
+                    input("Map of that index doesnt exist")
                     return
                 map_index = int(command[1]) - 1
                 key_ammount = 0
@@ -330,10 +330,13 @@ def character_input():
                 move_count = 0
             elif command[0] == "setpos":
                 if len(command) < 3:
-                    input("Not enough arguments present: ")
+                    input("Not enough arguments present")
+                    return
+                elif int(command[1]) >= 17 or int(command[2]) >= 17 or int(command[1]) <= -18 or int(command[2]) <= -18:
+                    input("This coordinate is beyond reach")
                     return
                 LEVELS[map_index][y_coord, x_coord] = "."
-                x_coord, y_coord = int(command[1]) + 3, int(command[2]) + 3
+                x_coord, y_coord = int(command[1]), int(command[2])
                 LEVELS[map_index][y_coord, x_coord] = "@"
             elif command[0] == "startpos":
                 LEVELS[map_index][y_coord, x_coord] = "."
@@ -341,34 +344,53 @@ def character_input():
                 LEVELS[map_index][y_coord, x_coord] = "@"
             elif command[0] == "showpos":
                 if len(command) < 2:
-                    input("No arguments present: ")
+                    input("No arguments present")
                     return
                 showpos = int(command[1])
             elif command[0] == "noclip":
                 if len(command) < 2:
-                    input("No arguments present: ")
+                    input("No arguments present")
                     return
                 noclip = int(command[1])
             elif command[0] == "god":
                 if len(command) < 2:
-                    input("No arguments present: ")
+                    input("No arguments present")
                     return
                 god = int(command[1])
             elif command[0] == "summon":
-                if len(command) < 2:
-                    input("No arguments present: ")
+                if len(command) < 2 or len(command) == 3:
+                    input("No arguments present")
+                    return
+                elif len(command) == 4:
+                    if int(command[2]) >= 17 or int(command[3]) >= 17 or int(command[2]) <= -18 or int(command[3]) <= -18:
+                        input("This coordinate is beyond reach")
+                        return
+                    LEVELS[map_index][int(command[3]), int(command[2])] = command[1]
                     return
                 LEVELS[map_index][y_coord + 1, x_coord] = command[1]
-            elif command[0] == "givekey":
+            elif command[0] == "setkey":
                 if len(command) < 2:
-                    input("No arguments present: ")
+                    input("No arguments present")
                     return
-                key_ammount += int(command[1])
+                key_ammount = int(command[1])
             elif command[0] == "changedif":
                 if len(command) < 2:
-                    input("No arguments present: ")
+                    input("No arguments present")
                     return
                 mode = int(command[1])
+            elif command[0] == "setmove":
+                if len(command) < 2:
+                    input("No arguments present")
+                    return
+                move_count = int(command[1])
+            elif command[0] == "space":
+                if len(command) < 2:
+                    input("No arguments present")
+                    return
+                if command[1] == "1":
+                    space = " "
+                    return
+                space = ""
         except ValueError:
                 input("There is no digit")
     tic = False
