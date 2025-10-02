@@ -248,6 +248,7 @@ def character_movement(x_dir, y_dir):
         move_count = 0
         key_ammount = 0
         barrel_spawned = 0
+        wall_open = 0
         x_coord, y_coord = coords[map_index, 0], coords[map_index, 1]
         LEVELS[map_index] = copy.deepcopy(LEVELS_START[map_index])
         return
@@ -258,6 +259,7 @@ def character_movement(x_dir, y_dir):
         move_count = 0
         key_ammount = 0
         barrel_spawned = 0
+        wall_open = 0
         x_coord, y_coord = coords[map_index, 0], coords[map_index, 1]
         LEVELS[map_index] = copy.deepcopy(LEVELS_START[map_index])
         return
@@ -283,6 +285,8 @@ def character_input():
     if action == "r" or action == "R":
         move_count = 0
         key_ammount = 0
+        barrel_spawned = 0
+        wall_open = 0
         x_coord, y_coord = coords[map_index, 0], coords[map_index, 1]
         LEVELS[map_index] = copy.deepcopy(LEVELS_START[map_index])
         return
