@@ -1,6 +1,7 @@
 Legend for the game:  
 @ - Player  
 K - Key  
+T - Teleporter  
 H - Hole: Kills the player, can be filled by a box  
 o/O - Button: Can be pushed by a box  
 D - Door: Needs a key to open it and takes one from you  
