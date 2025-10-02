@@ -2,7 +2,7 @@ import numpy as np
 import copy, os, getch, sys
 
 key_ammount = 0; move_count = 0; map_index = 0
-barrel_spawned = 0; deadly_floor = [0, 1, 2]; pure_deadly_floor = 2; pure_deadly_floor_plus = 3
+barrel_spawned = 0; wall_open = 0; deadly_floor = [0, 1, 2]; pure_deadly_floor = 2; pure_deadly_floor_plus = 3
 x_coord = 12; y_coord = 11
 coords = np.array([[12, 11], [10, 10], [4, 13], [4, 15], [5, 13], [10, 14], [9, 11]])
 mode = 0; tic = True; space = " "
@@ -397,7 +397,7 @@ def character_input():
     tic = False
 
 def map_specific_events():
-    global map_index, move_count, barrel_spawned, deadly_floor, absolute_deadly_floor, pure_deadly_floor, absolute_deadly_floor_plus, pure_deadly_floor_plus, x_coord, y_coord, tic
+    global map_index, move_count, barrel_spawned, deadly_floor, absolute_deadly_floor, pure_deadly_floor, absolute_deadly_floor_plus, pure_deadly_floor_plus, x_coord, y_coord, tic, wall_open
     if map_index == 3:
         absolute_deadly_floor = abs(pure_deadly_floor - 2)
         absolute_deadly_floor_plus = abs(pure_deadly_floor_plus - 2)
@@ -432,7 +432,9 @@ def map_specific_events():
                 LEVELS[map_index][6, 13] = "."
             LEVELS[map_index][6, 15] = "."
             LEVELS[map_index][8, 15] = "."
-            print_level(LEVELS[map_index])
+            if wall_open == 0:
+                print_level(LEVELS[map_index])
+                wall_open = 1
         absolute_deadly_floor = abs(pure_deadly_floor - 2)
         LEVELS[map_index][11, 13 + absolute_deadly_floor - 1] = "."
         LEVELS[map_index][7 + absolute_deadly_floor - 1, 11] = "."
