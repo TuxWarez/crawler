@@ -303,6 +303,7 @@ def character_input():
         print("Legend for the game:")
         print("@ - Player")
         print("K - Key")
+        print("T - Teleporter")
         print("H - Hole: Kills the player, can be filled by a box")
         print("o/O - Ground button: Can be pushed by a box")
         print("D - Door: Needs a key to open it and takes one from you")
@@ -413,6 +414,7 @@ def map_specific_events():
                 LEVELS[map_index][9, 10] = "B"
                 LEVELS[map_index][11, 10] = "B"
                 barrel_spawned = 1
+                print_level(LEVELS[map_index])
             for i in range(2):
                 for j in range(2):
                     if LEVELS[map_index][8 + (i*4), 7 + (j*4)] != "B":
@@ -420,6 +422,7 @@ def map_specific_events():
             if np.count_nonzero(LEVELS[map_index] == "O") == 0:
                 if LEVELS[map_index][5, 15] != "@":
                     LEVELS[map_index][5, 15] = "."
+                print_level(LEVELS[map_index])
     elif map_index == 4:
         if LEVELS[map_index][4, 14] == "*":
             if barrel_spawned == 0:
@@ -429,6 +432,7 @@ def map_specific_events():
                 LEVELS[map_index][6, 13] = "."
             LEVELS[map_index][6, 15] = "."
             LEVELS[map_index][8, 15] = "."
+            print_level(LEVELS[map_index])
         absolute_deadly_floor = abs(pure_deadly_floor - 2)
         LEVELS[map_index][11, 13 + absolute_deadly_floor - 1] = "."
         LEVELS[map_index][7 + absolute_deadly_floor - 1, 11] = "."
@@ -452,6 +456,9 @@ def map_specific_events():
         pure_deadly_floor += 1
         if LEVELS[map_index][10, 14] == "*":
             LEVELS[map_index][8, 13] = "."
+            if barrel_spawned == 0:
+                print_level(LEVELS[map_index])
+                barrel_spawned = 1
         # Moving killing floors
         LEVELS[map_index][12 - (pure_deadly_floor % 5), 9] = "*"
         LEVELS[map_index][12 - ((pure_deadly_floor - 1) % 5), 9] = "."
