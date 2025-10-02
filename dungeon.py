@@ -464,6 +464,7 @@ def map_specific_events():
     elif map_index == 6:
         if LEVELS[map_index][10, 11] == "@":
             input('Game made by Rhea "Tuxware"')
+            print_level(LEVELS[map_index])
 
 clear_screen()
 print("1. Easy")
