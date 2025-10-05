@@ -2,13 +2,13 @@ import numpy as np
 import copy, os, getch, sys
 
 key_ammount = 0; move_count = 0; map_index = 0
-barrel_spawned = 0; wall_open = 0; deadly_floor = [0, 1, 2]; pure_deadly_floor = 2; pure_deadly_floor_plus = 3
+latch_1 = 0; latch_2 = 0; deadly_floor = [0, 1, 2]; pure_deadly_floor = 2; pure_deadly_floor_plus = 3
 x_coord = 12; y_coord = 11
-coords = np.array([[12, 11], [10, 10], [4, 13], [4, 15], [5, 13], [10, 14], [9, 11]])
+coords = np.array([[12, 11], [10, 10], [4, 13], [4, 15], [5, 13], [10, 14], [9, 16], [9, 11]])
 mode = 0; tic = True; space = " "
 showpos = 0; noclip = 0; god = 0
 WALLS = np.array(['═', '║', '╚', '╝', '╔', '╗', '╠', '╣', '╩', '╦'])
-LEVEL_TITLECARD = np.array(["LVL01: Introduction", "LVL02: Four way", "LVL03: Boxes", "LVL04: Buttons", "LVL05: Barb Wire", "LVL06: Teleportation", "THX: Thanks for playing!"])
+LEVEL_TITLECARD = np.array(["LVL01: Introduction", "LVL02: Four way", "LVL03: Boxes", "LVL04: Buttons", "LVL05: Barb Wire", "LVL06: Teleportation", "LVL07: Back 'n' forth", "THX: Thanks for playing!"])
 
 lvl01 = np.array([['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
                   ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
@@ -151,6 +151,29 @@ lvl06_start = copy.deepcopy(lvl06)
 lvl07 = np.array([['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
                   ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
                   ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+                  ['.', '.', '.', '╔', '═', '═', '═', '═', '═', '═', '═', '═', '═', '═', '═', '═', 'o', '╗', '.', '.', '.'],
+                  ['.', '.', '.', '║', 'T', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '║', '.', '.', '.'],
+                  ['.', '.', '.', '╚', '═', '═', '═', '╗', '.', '╦', '.', '╔', '═', '═', '═', '╗', '.', '║', '.', '.', '.'],
+                  ['.', '.', '.', '╔', '═', '╗', '.', '║', '.', '║', '.', '║', '╔', '═', '═', '╝', '.', '║', '.', '.', '.'],
+                  ['.', '.', '.', '║', 't', '║', '.', '║', '.', '║', '.', '║', '║', '.', '.', '.', '.', '║', '.', '.', '.'],
+                  ['.', '.', '.', '║', '.', '║', '.', '╚', '═', '╩', '═', '╝', '╠', '═', '═', '╣', '.', '║', '.', '.', '.'],
+                  ['.', '.', '.', '║', 'B', '║', '.', '.', '.', '.', '.', '.', '║', '.', '.', '.', '.', '║', '.', '.', '.'],
+                  ['.', '.', '.', '║', '.', '╚', '═', '═', '╗', '.', '.', '.', '╚', '═', '═', '╗', '.', '║', '.', '.', '.'],
+                  ['.', '.', '.', '║', '.', '.', '.', '.', '║', '.', '.', '.', '.', '.', '.', '║', '.', '║', '.', '.', '.'],
+                  ['.', '.', '.', '║', '.', '╠', '═', '═', '╣', '.', '╔', '═', '╦', '═', '╗', '║', '.', '║', '.', '.', '.'],
+                  ['.', '.', '.', '║', '.', '.', '.', '.', '║', '.', '║', '.', '║', '.', '║', '║', 't', '║', '.', '.', '.'],
+                  ['.', '.', '.', '║', '.', '╔', '═', '═', '╝', '.', '║', '.', '║', '.', '║', '╚', '═', '╝', '.', '.', '.'],
+                  ['.', '.', '.', '║', '.', '║', '╔', '═', '═', '═', '╝', '.', '╩', '.', '╚', '═', '═', '╗', '.', '.', '.'],
+                  ['.', '.', '.', '║', '.', '║', '║', 'E', 'H', '@', '.', '.', '.', '.', '.', '.', 'T', '║', '.', '.', '.'],
+                  ['.', '.', '.', '╚', 'o', '╝', '╚', '═', '═', '═', '═', '═', '═', '═', '═', '═', '═', '╝', '.', '.', '.'],
+                  ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+                  ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+                  ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.']])
+lvl07_start = copy.deepcopy(lvl07)
+
+lvl08 = np.array([['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+                  ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
+                  ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
                   ['.', '.', '.', '╔', '═', '═', '═', '═', '═', '═', '═', '═', '═', '═', '═', '═', '═', '╗', '.', '.', '.'],
                   ['.', '.', '.', '║', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '║', '.', '.', '.'],
                   ['.', '.', '.', '║', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '║', '.', '.', '.'],
@@ -169,10 +192,10 @@ lvl07 = np.array([['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '
                   ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
                   ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
                   ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.']])
-lvl07_start = copy.deepcopy(lvl07)
+lvl08_start = copy.deepcopy(lvl08)
 
-LEVELS = np.array([lvl01, lvl02, lvl03, lvl04, lvl05, lvl06, lvl07])
-LEVELS_START = np.array([lvl01_start, lvl02_start, lvl03_start, lvl04_start, lvl05_start, lvl06_start, lvl07_start])
+LEVELS = np.array([lvl01, lvl02, lvl03, lvl04, lvl05, lvl06, lvl07, lvl08])
+LEVELS_START = np.array([lvl01_start, lvl02_start, lvl03_start, lvl04_start, lvl05_start, lvl06_start, lvl07_start, lvl08_start])
 
 def clear_screen():
     if sys.platform == "win32":
@@ -209,7 +232,7 @@ def print_level(level):
         print(f"{x_coord}, {y_coord}")
 
 def character_movement(x_dir, y_dir):
-    global key_ammount, map_index, y_coord, x_coord, move_count, barrel_spawned, tic, noclip, god
+    global key_ammount, map_index, y_coord, x_coord, move_count, latch_1, latch_2, tic, noclip, god
     move_count += 1
     if (LEVELS[map_index][y_coord + y_dir, x_coord + x_dir] in WALLS or y_coord + y_dir == 17 or LEVELS[map_index][y_coord + y_dir, x_coord + x_dir] == "o") and noclip == 0:
         move_count -= 1
@@ -247,8 +270,7 @@ def character_movement(x_dir, y_dir):
         input("You fell down a hole...")
         move_count = 0
         key_ammount = 0
-        barrel_spawned = 0
-        wall_open = 0
+        latch_1 = 0; latch_2 = 0
         x_coord, y_coord = coords[map_index, 0], coords[map_index, 1]
         LEVELS[map_index] = copy.deepcopy(LEVELS_START[map_index])
         return
@@ -258,8 +280,7 @@ def character_movement(x_dir, y_dir):
         input("You Died...")
         move_count = 0
         key_ammount = 0
-        barrel_spawned = 0
-        wall_open = 0
+        latch_1 = 0; latch_2 = 0
         x_coord, y_coord = coords[map_index, 0], coords[map_index, 1]
         LEVELS[map_index] = copy.deepcopy(LEVELS_START[map_index])
         return
@@ -268,7 +289,7 @@ def character_movement(x_dir, y_dir):
         map_index += 1
         x_coord, y_coord = coords[map_index, 0], coords[map_index, 1]
         move_count = 0
-        barrel_spawned = 0
+        latch_1 = 0; latch_2 = 0
         key_ammount = 0
         return
     x_coord += x_dir; y_coord += y_dir
@@ -285,8 +306,8 @@ def character_input():
     if action == "r" or action == "R":
         move_count = 0
         key_ammount = 0
-        barrel_spawned = 0
-        wall_open = 0
+        latch_1 = 0
+        latch_2 = 0
         x_coord, y_coord = coords[map_index, 0], coords[map_index, 1]
         LEVELS[map_index] = copy.deepcopy(LEVELS_START[map_index])
         return
@@ -329,6 +350,7 @@ def character_input():
                 elif int(command[1]) > len(LEVELS):
                     input("Map of that index doesnt exist")
                     return
+                LEVELS[map_index] = LEVELS_START[map_index]
                 map_index = int(command[1]) - 1
                 key_ammount = 0
                 x_coord, y_coord = coords[map_index, 0], coords[map_index, 1]
@@ -401,7 +423,7 @@ def character_input():
     tic = False
 
 def map_specific_events():
-    global map_index, move_count, barrel_spawned, deadly_floor, absolute_deadly_floor, pure_deadly_floor, absolute_deadly_floor_plus, pure_deadly_floor_plus, x_coord, y_coord, tic, wall_open
+    global map_index, move_count, latch_1, deadly_floor, absolute_deadly_floor, pure_deadly_floor, absolute_deadly_floor_plus, pure_deadly_floor_plus, x_coord, y_coord, tic, latch_2
     if map_index == 3:
         absolute_deadly_floor = abs(pure_deadly_floor - 2)
         absolute_deadly_floor_plus = abs(pure_deadly_floor_plus - 2)
@@ -412,12 +434,12 @@ def map_specific_events():
         absolute_deadly_floor_plus = abs(pure_deadly_floor_plus - 2)
         LEVELS[map_index][11 - absolute_deadly_floor_plus, 9 + absolute_deadly_floor - 1] = "*"
         if LEVELS[map_index][10, 9] == "*":
-            if barrel_spawned == 0:
+            if latch_1 == 0:
                 LEVELS[map_index][11, 8] = "B"
                 LEVELS[map_index][9, 8] = "B"
                 LEVELS[map_index][9, 10] = "B"
                 LEVELS[map_index][11, 10] = "B"
-                barrel_spawned = 1
+                latch_1 = 1
                 print_level(LEVELS[map_index])
             for i in range(2):
                 for j in range(2):
@@ -429,16 +451,16 @@ def map_specific_events():
                 print_level(LEVELS[map_index])
     elif map_index == 4:
         if LEVELS[map_index][4, 14] == "*":
-            if barrel_spawned == 0:
+            if latch_1 == 0:
                 LEVELS[map_index][14, 14] = "B"
-                barrel_spawned = 1
+                latch_1 = 1
             if LEVELS[map_index][6, 13] != "B":
                 LEVELS[map_index][6, 13] = "."
             LEVELS[map_index][6, 15] = "."
             LEVELS[map_index][8, 15] = "."
-            if wall_open == 0:
+            if latch_2 == 0:
                 print_level(LEVELS[map_index])
-                wall_open = 1
+                latch_2 = 1
         absolute_deadly_floor = abs(pure_deadly_floor - 2)
         LEVELS[map_index][11, 13 + absolute_deadly_floor - 1] = "."
         LEVELS[map_index][7 + absolute_deadly_floor - 1, 11] = "."
@@ -462,9 +484,9 @@ def map_specific_events():
         pure_deadly_floor += 1
         if LEVELS[map_index][10, 14] == "*":
             LEVELS[map_index][8, 13] = "."
-            if barrel_spawned == 0:
+            if latch_1 == 0:
                 print_level(LEVELS[map_index])
-                barrel_spawned = 1
+                latch_1 = 1
         # Moving killing floors
         LEVELS[map_index][12 - (pure_deadly_floor % 5), 9] = "*"
         LEVELS[map_index][12 - ((pure_deadly_floor - 1) % 5), 9] = "."
@@ -475,9 +497,66 @@ def map_specific_events():
         LEVELS[map_index][11, 12 - (pure_deadly_floor % 5)] = "*"
         LEVELS[map_index][11, 12 - ((pure_deadly_floor - 1) % 5)] = "."
     elif map_index == 6:
-        if LEVELS[map_index][10, 11] == "@":
-            input('Game made by Rhea "Tuxware"')
+        if LEVELS[map_index][4, 4] == "B":
+            LEVELS[map_index][16, 15] = "B"
+            LEVELS[map_index][4, 4] = "T"
             print_level(LEVELS[map_index])
+        if LEVELS[map_index][7, 4] == "B":
+            LEVELS[map_index][12, 16] = "B"
+            LEVELS[map_index][7, 4] = "t"
+            print_level(LEVELS[map_index])
+        pure_deadly_floor += 1
+        LEVELS[map_index][13 + (pure_deadly_floor % 4), 11] = "*"
+        LEVELS[map_index][13 + ((pure_deadly_floor - 1) % 4), 11] = "."
+        LEVELS[map_index][13 + ((pure_deadly_floor + 1) % 4), 13] = "*"
+        LEVELS[map_index][13 + (pure_deadly_floor % 4), 13] = "."
+        LEVELS[map_index][7 - ((pure_deadly_floor + 1) % 4), 8] = "*"
+        LEVELS[map_index][7 - (pure_deadly_floor % 4), 8] = "."
+        LEVELS[map_index][7 - ((pure_deadly_floor + 2) % 4), 10] = "*"
+        LEVELS[map_index][7 - ((pure_deadly_floor + 1) % 4), 10] = "."
+        LEVELS[map_index][7, 13 + (pure_deadly_floor % 4)] = "*"
+        LEVELS[map_index][7, 13 + ((pure_deadly_floor - 1) % 4)] = "."
+        LEVELS[map_index][9, 13 + ((pure_deadly_floor + 2) % 4)] = "*"
+        LEVELS[map_index][9, 13 + ((pure_deadly_floor + 1) % 4)] = "."
+        LEVELS[map_index][11, 7 - ((pure_deadly_floor + 1) % 4)] = "*"
+        LEVELS[map_index][11, 7 - (pure_deadly_floor % 4)] = "."
+        LEVELS[map_index][13, 7 - ((pure_deadly_floor + 3) % 4)] = "*"
+        LEVELS[map_index][13, 7 - ((pure_deadly_floor + 2) % 4)] = "."
+        LEVELS[map_index][16, 16] = "T"
+        LEVELS[map_index][4, 4] = "T"
+        LEVELS[map_index][13, 16] = "t"
+        LEVELS[map_index][7, 4] = "t"
+        if x_coord == 16 and y_coord == 16:
+            x_coord = 4; y_coord = 4
+            LEVELS[map_index][4, 4] = "@"
+            print_level(LEVELS[map_index])
+            return
+        elif x_coord == 4 and y_coord == 4:
+            x_coord = 16; y_coord = 16
+            LEVELS[map_index][16, 16] = "@"
+            print_level(LEVELS[map_index])
+        elif x_coord == 16 and y_coord == 13:
+            x_coord = 4; y_coord = 7
+            LEVELS[map_index][7, 4] = "@"
+            print_level(LEVELS[map_index])
+            return
+        elif x_coord == 4 and y_coord == 7:
+            x_coord = 16; y_coord = 13
+            LEVELS[map_index][13, 16] = "@"
+            print_level(LEVELS[map_index])
+            return
+        if LEVELS[map_index][17, 4] == "*" and latch_1 == 0:
+            LEVELS[map_index][15, 4] = "B"
+            print_level(LEVELS[map_index])
+            latch_1 = 1
+        if LEVELS[map_index][3, 16] == "*" and latch_2 == 0:
+            LEVELS[map_index][4, 15] = "B"
+            print_level(LEVELS[map_index])
+            latch_2 = 1
+        elif map_index == 7:
+            if LEVELS[map_index][10, 11] == "@":
+                input('Game made by Rhea "Tuxware"')
+                print_level(LEVELS[map_index])
 
 clear_screen()
 print("1. Easy")
