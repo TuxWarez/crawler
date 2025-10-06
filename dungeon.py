@@ -344,7 +344,7 @@ def character_input():
         print("Input a command:")
         try:
             command = input().split(" ")
-            if command[0] == "changelvl":
+            if command[0].lower() == "changelvl":
                 if len(command) < 2:
                     input("No arguments present")
                     return
@@ -356,7 +356,7 @@ def character_input():
                 key_ammount = 0
                 x_coord, y_coord = coords[map_index, 0], coords[map_index, 1]
                 move_count = 0
-            elif command[0] == "setpos":
+            elif command[0].lower() == "setpos":
                 if len(command) < 3:
                     input("Not enough arguments present")
                     return
@@ -366,26 +366,26 @@ def character_input():
                 LEVELS[map_index][y_coord, x_coord] = "."
                 x_coord, y_coord = int(command[1]), int(command[2])
                 LEVELS[map_index][y_coord, x_coord] = "@"
-            elif command[0] == "startpos":
+            elif command[0].lower() == "startpos":
                 LEVELS[map_index][y_coord, x_coord] = "."
                 x_coord, y_coord = coords[map_index, 0], coords[map_index, 1]
                 LEVELS[map_index][y_coord, x_coord] = "@"
-            elif command[0] == "showpos":
+            elif command[0].lower() == "showpos":
                 if len(command) < 2:
                     input("No arguments present")
                     return
                 showpos = int(command[1])
-            elif command[0] == "noclip":
+            elif command[0].lower() == "noclip":
                 if len(command) < 2:
                     input("No arguments present")
                     return
                 noclip = int(command[1])
-            elif command[0] == "god":
+            elif command[0].lower() == "god":
                 if len(command) < 2:
                     input("No arguments present")
                     return
                 god = int(command[1])
-            elif command[0] == "summon":
+            elif command[0].lower() == "summon":
                 if len(command) < 2 or len(command) == 3:
                     input("No arguments present")
                     return
@@ -396,22 +396,22 @@ def character_input():
                     LEVELS[map_index][int(command[3]), int(command[2])] = command[1]
                     return
                 LEVELS[map_index][y_coord + 1, x_coord] = command[1]
-            elif command[0] == "setkey":
+            elif command[0].lower() == "setkey":
                 if len(command) < 2:
                     input("No arguments present")
                     return
                 key_ammount = int(command[1])
-            elif command[0] == "changedif":
+            elif command[0].lower() == "changedif":
                 if len(command) < 2:
                     input("No arguments present")
                     return
                 mode = int(command[1])
-            elif command[0] == "setmove":
+            elif command[0].lower() == "setmove":
                 if len(command) < 2:
                     input("No arguments present")
                     return
                 move_count = int(command[1])
-            elif command[0] == "space":
+            elif command[0].lower() == "space":
                 if len(command) < 2:
                     input("No arguments present")
                     return
