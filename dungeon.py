@@ -2,7 +2,8 @@ import numpy as np
 import copy, os, getch, sys
 
 key_ammount = 0; move_count = 0; map_index = 0
-latch_1 = 0; latch_2 = 0; deadly_floor = [0, 1, 2]; pure_deadly_floor = 2; pure_deadly_floor_plus = 3
+latch_1 = 0; latch_2 = 0; latch_3 = 0
+deadly_floor = [0, 1, 2]; pure_deadly_floor = 2; pure_deadly_floor_plus = 3
 x_coord = 12; y_coord = 11
 coords = np.array([[12, 11], [10, 10], [4, 13], [4, 15], [5, 13], [10, 14], [9, 16], [9, 11]])
 mode = 0; tic = True; space = " "
@@ -423,7 +424,7 @@ def character_input():
     tic = False
 
 def map_specific_events():
-    global map_index, move_count, latch_1, deadly_floor, absolute_deadly_floor, pure_deadly_floor, absolute_deadly_floor_plus, pure_deadly_floor_plus, x_coord, y_coord, tic, latch_2
+    global map_index, move_count, latch_1, deadly_floor, absolute_deadly_floor, pure_deadly_floor, absolute_deadly_floor_plus, pure_deadly_floor_plus, x_coord, y_coord, tic, latch_2, latch_3
     if map_index == 3:
         absolute_deadly_floor = abs(pure_deadly_floor - 2)
         absolute_deadly_floor_plus = abs(pure_deadly_floor_plus - 2)
@@ -553,10 +554,13 @@ def map_specific_events():
             LEVELS[map_index][4, 15] = "B"
             print_level(LEVELS[map_index])
             latch_2 = 1
-        elif map_index == 7:
-            if LEVELS[map_index][10, 11] == "@":
-                input('Game made by Rhea "Tuxware"')
-                print_level(LEVELS[map_index])
+        if latch_3 == 0:
+            print_level(LEVELS[map_index])
+            latch_3 = 1
+    elif map_index == 7:
+        if LEVELS[map_index][10, 11] == "@":
+            input('Game made by Rhea "Tuxware"')
+            print_level(LEVELS[map_index])
 
 clear_screen()
 print("1. Easy")
