@@ -17,12 +17,12 @@ Console commands:
 `changelvl` \[level number] - Changes the level  
 `setpos` \[x-coord] \[y-coord] - Changes the position of the player  
 `startpos` \[no arguments] - Sets the player position to the starting position  
-`showpos` \[[0]|1] - Shows the coordinates of the player  
-`noclip` \[[0]|1] - Disables the collision of the player  
-`god` \[[0]|1] - Makes the player invincible  
+`showpos` \[0|1] - Shows the coordinates of the player  
+`noclip` \[0|1] - Disables the collision of the player  
+`god` \[0|1] - Makes the player invincible  
 `summon` \[Character] optional\[x-coord] \[y-coord]- Summons a character below the player; if the coordinates are present, it summons a character at the specified coordinates  
 `setkey` \[ammount] - Sets a specified ammount of keys in the player inventory  
-`changedif` \[1|[2]|3|4] - Changes the difficulty on the fly  
+`changedif` \[1|2|3|4] - Changes the difficulty on the fly  
 `setmove` \[ammount] - Sets a specified ammount of moves in the player inventory   
-`space` \[0|[1]] - Sets if there will be space in between characters  
-`dots` \[0|[1]] - Sets if the dots are printed on the screen  
+`space` \[0|1] - Sets if there will be space in between characters  
+`dots` \[0|1] - Sets if the dots are printed on the screen  
