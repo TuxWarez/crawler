@@ -7,7 +7,7 @@ deadly_floor = [0, 1, 2]; pure_deadly_floor = 2; pure_deadly_floor_plus = 3
 x_coord = 12; y_coord = 11
 coords = np.array([[12, 11], [10, 10], [4, 13], [4, 15], [5, 13], [10, 14], [9, 16], [9, 11]])
 mode = 0; tic = True; space = " "
-showpos = 0; noclip = 0; noclip_destroy = 0; god = 0; dots = True
+showpos = 0; noclip = 0; noclip_destroy = 0; god = 0; dots = 1
 WALLS = np.array(['═', '║', '╚', '╝', '╔', '╗', '╠', '╣', '╩', '╦'])
 LEVEL_TITLECARD = np.array(["LVL01: Introduction", "LVL02: Four way", "LVL03: Boxes", "LVL04: Buttons", "LVL05: Barb Wire", "LVL06: Teleportation", "LVL07: Back 'n' forth", "THX: Thanks for playing!"])
 
