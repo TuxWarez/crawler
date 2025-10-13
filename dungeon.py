@@ -7,7 +7,7 @@ deadly_floor = [0, 1, 2]; pure_deadly_floor = 2; pure_deadly_floor_plus = 3
 x_coord = 12; y_coord = 11
 coords = np.array([[12, 11], [10, 10], [4, 13], [4, 15], [5, 13], [10, 14], [9, 16], [9, 11]])
 mode = 0; tic = True; space = " "
-showpos = 0; noclip = 0; god = 0
+showpos = 0; noclip = 0; noclip_destroy = 0; god = 0; dots = True
 WALLS = np.array(['═', '║', '╚', '╝', '╔', '╗', '╠', '╣', '╩', '╦'])
 LEVEL_TITLECARD = np.array(["LVL01: Introduction", "LVL02: Four way", "LVL03: Boxes", "LVL04: Buttons", "LVL05: Barb Wire", "LVL06: Teleportation", "LVL07: Back 'n' forth", "THX: Thanks for playing!"])
 
@@ -205,32 +205,42 @@ def clear_screen():
     os.system("clear")
 
 def print_level(level):
-    global mode, showpos, space
+    global mode, showpos
     clear_screen()
     if mode == 1:
         for i in range(3, 18):
             for j in range(3, 18):
-                print(LEVELS[map_index][i, j], end=space)
+                if dots == False:
+                    if LEVELS[map_index][i, j] == ".":
+                        print(" ", end=space)
+                    else:
+                        print(LEVELS[map_index][i, j], end=space)
+                else:
+                    print(LEVELS[map_index][i, j], end=space)
             print()
     elif mode == 3:
-        for i in range(y_coord - 2, y_coord + 3):
-            for j in range(x_coord - 2, x_coord + 3):
-                print(LEVELS[map_index][i, j], end=space)
-            print()
+        print_playarea(2, 3)
     elif mode == 4:
-        for i in range(y_coord - 1, y_coord + 2):
-            for j in range(x_coord - 1, x_coord + 2):
-                print(LEVELS[map_index][i, j], end=space)
-            print()
+        print_playarea(1, 2)
     else:
-        for i in range(y_coord - 4, y_coord + 5):
-            for j in range(x_coord - 4, x_coord + 5):
-                print(LEVELS[map_index][i, j], end=space)
-            print()
+        print_playarea(4, 5)
     print(LEVEL_TITLECARD[map_index])
     print(f"KEYS={key_ammount} MOVES={move_count}")
     if showpos == 1:
         print(f"{x_coord}, {y_coord}")
+
+def print_playarea(left, right):
+    global space, dots
+    for i in range(y_coord - left, y_coord + right):
+        for j in range(x_coord - left, x_coord + right):
+            if dots == False:
+                if LEVELS[map_index][i, j] == ".":
+                    print(" ", end=space)
+                else:
+                    print(LEVELS[map_index][i, j], end=space)
+            else:
+                print(LEVELS[map_index][i, j], end=space)
+        print()
 
 def character_movement(x_dir, y_dir):
     global key_ammount, map_index, y_coord, x_coord, move_count, latch_1, latch_2, tic, noclip, god
@@ -271,7 +281,7 @@ def character_movement(x_dir, y_dir):
         input("You fell down a hole...")
         move_count = 0
         key_ammount = 0
-        latch_1 = 0; latch_2 = 0
+        latch_1 = 0; latch_2 = 0; latch_3 = 0
         x_coord, y_coord = coords[map_index, 0], coords[map_index, 1]
         LEVELS[map_index] = copy.deepcopy(LEVELS_START[map_index])
         return
@@ -281,7 +291,7 @@ def character_movement(x_dir, y_dir):
         input("You Died...")
         move_count = 0
         key_ammount = 0
-        latch_1 = 0; latch_2 = 0
+        latch_1 = 0; latch_2 = 0; latch_3 = 0
         x_coord, y_coord = coords[map_index, 0], coords[map_index, 1]
         LEVELS[map_index] = copy.deepcopy(LEVELS_START[map_index])
         return
@@ -290,25 +300,24 @@ def character_movement(x_dir, y_dir):
         map_index += 1
         x_coord, y_coord = coords[map_index, 0], coords[map_index, 1]
         move_count = 0
-        latch_1 = 0; latch_2 = 0
+        latch_1 = 0; latch_2 = 0; latch_3 = 0
         key_ammount = 0
         return
     x_coord += x_dir; y_coord += y_dir
     LEVELS[map_index][y_coord, x_coord] = "@"
     if LEVELS[map_index][y_coord - y_dir, x_coord - x_dir] != "*":
         LEVELS[map_index][y_coord - y_dir, x_coord - x_dir] = "."
-    if noclip == 1:
+    if noclip == 1 and noclip_destroy == 0:
          LEVELS[map_index][y_coord - y_dir, x_coord - x_dir] = LEVELS_START[map_index][y_coord - y_dir, x_coord - x_dir]
     tic = True
 
 def character_input():
-    global key_ammount, map_index, y_coord, x_coord, move_count, tic, showpos, noclip, god, mode, space
+    global key_ammount, map_index, y_coord, x_coord, move_count, tic, showpos, noclip, noclip_destroy, god, mode, space, dots
     action = getch.getch()
     if action == "r" or action == "R":
         move_count = 0
         key_ammount = 0
-        latch_1 = 0
-        latch_2 = 0
+        latch_1 = 0; latch_2 = 0; latch_3 = 0
         x_coord, y_coord = coords[map_index, 0], coords[map_index, 1]
         LEVELS[map_index] = copy.deepcopy(LEVELS_START[map_index])
         return
@@ -379,6 +388,11 @@ def character_input():
                 if len(command) < 2:
                     input("No arguments present")
                     return
+                if len(command) == 3:
+                    if command[2].lower() == "d1":
+                        noclip_destroy = 1
+                    else:
+                        noclip_destroy = 0
                 noclip = int(command[1])
             elif command[0].lower() == "god":
                 if len(command) < 2:
@@ -419,6 +433,11 @@ def character_input():
                     space = " "
                     return
                 space = ""
+            elif command[0].lower() == "dots":
+                if len(command) < 2:
+                    input("No arguments present")
+                    return
+                dots = int(command[1])
         except ValueError:
                 input("There is no digit")
     tic = False
