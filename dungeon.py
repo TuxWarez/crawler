@@ -1,7 +1,7 @@
 import numpy as np
 import copy, os, getch, sys
 
-key_ammount = 0; move_count = 0; map_index = 0
+key_ammount = 0; move_count = 0; all_moves = 0; map_index = 0
 latch_1 = 0; latch_2 = 0; latch_3 = 0
 deadly_floor = [0, 1, 2]; pure_deadly_floor = 2; pure_deadly_floor_plus = 3
 x_coord = 12; y_coord = 11
@@ -225,7 +225,7 @@ def print_level(level):
     else:
         print_playarea(4, 5)
     print(LEVEL_TITLECARD[map_index])
-    print(f"KEYS={key_ammount} MOVES={move_count}")
+    print(f"KEYS={key_ammount} MOVES={move_count} ALL={all_moves}")
     if showpos == 1:
         print(f"{x_coord}, {y_coord}")
 
@@ -243,7 +243,7 @@ def print_playarea(left, right):
         print()
 
 def character_movement(x_dir, y_dir):
-    global key_ammount, map_index, y_coord, x_coord, move_count, latch_1, latch_2, tic, noclip, god
+    global key_ammount, map_index, y_coord, x_coord, move_count, all_moves, latch_1, latch_2, latch_3, tic, noclip, god
     move_count += 1
     if (LEVELS[map_index][y_coord + y_dir, x_coord + x_dir] in WALLS or y_coord + y_dir == 17 or LEVELS[map_index][y_coord + y_dir, x_coord + x_dir] == "o") and noclip == 0:
         move_count -= 1
@@ -299,6 +299,7 @@ def character_movement(x_dir, y_dir):
         LEVELS[map_index] = copy.deepcopy(LEVELS_START[map_index])
         map_index += 1
         x_coord, y_coord = coords[map_index, 0], coords[map_index, 1]
+        all_moves += move_count
         move_count = 0
         latch_1 = 0; latch_2 = 0; latch_3 = 0
         key_ammount = 0
@@ -400,7 +401,7 @@ def character_input():
                     return
                 god = int(command[1])
             elif command[0].lower() == "summon":
-                if len(command) < 2 or len(command) == 3:
+                if len(command) < 2:
                     input("No arguments present")
                     return
                 elif len(command) == 4:
