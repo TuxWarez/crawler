@@ -363,6 +363,7 @@ def character_input():
                     return
                 LEVELS[map_index] = LEVELS_START[map_index]
                 map_index = int(command[1]) - 1
+                latch_1 = 0; latch_2 = 0; latch_3 = 0
                 key_ammount = 0
                 x_coord, y_coord = coords[map_index, 0], coords[map_index, 1]
                 move_count = 0
