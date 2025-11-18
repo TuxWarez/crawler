@@ -9,9 +9,9 @@ coords = np.array([[12, 11], [10, 10], [4, 13], [4, 15], [5, 13], [9, 16], [10, 
 mode = 0; tic = True; space = " "
 showpos = 0; noclip = 0; noclip_destroy = 0; god = 0; dots = 1
 INDESTRUCTABLE = ["*", "t", "T"]
-WALLS = np.array(['═', '║', '╚', '╝', '╔', '╗', '╠', '╣', '╩', '╦'])
+WALLS = np.array(['═', '║', '╚', '╝', '╔', '╗', '╠', '╣', '╩', '╦', '╬'])
 LEVEL_TITLECARD = np.array(["LVL01: Introduction", "LVL02: Four way", "LVL03: Boxes", "LVL04: Buttons", "LVL05: Barb Wire", "LVL06: Back 'n' forth", "LVL07: Dance Floor", "THX: Thanks for playing!"])
-LEVEL_INSTRUCTION = np.array(["@: Player - moved with WASD controls\nK: Key; D: Door - cant be passed without a key", "If you get stuck you can press R to retry the level", "B: Box - can be pushed by the player\nH: Hole - kills the player and is filled by a box", "*: spike - Kills the player and destroys boxes\no/O: Button - can be ushed by a box", " ", "T/t: Teleporter", " ", " "])
+LEVEL_INSTRUCTION = np.array(["@: Player - Moved with WASD controls\nK: Key; D: Door - Can't be passed without a key", "If you get stuck press R to retry the level", "B: Box - Can be pushed by the player\nH: Hole - kills the player and is filled by a box", "*: spike - Kills the player and destroys boxes\no/O: Button - Can be ushed by a box", " ", "T/t: Teleporter", " ", " "])
 
 lvl01 = np.array([['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
                   ['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'],
@@ -44,11 +44,11 @@ lvl02 = np.array([['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '
                   ['.', '.', '.', '.', '.', '.', '.', '║', 'K', '╦', '.', '╦', 'D', '║', '.', '.', '.', '.', '.', '.', '.'],
                   ['.', '.', '.', '.', '.', '.', '.', '║', 'K', '║', '.', '║', '.', '║', '.', '.', '.', '.', '.', '.', '.'],
                   ['.', '.', '.', '╔', '═', '═', '═', '╬', '═', '╣', '.', '╠', '═', '╬', '═', '═', '═', '╗', '.', '.', '.'],
-                  ['.', '.', '.', '║', '.', '.', 'K', '║', '█', '║', '.', '║', '█', '║', 'E', 'D', '.', '║', '.', '.', '.'],
+                  ['.', '.', '.', '║', '.', '.', 'K', '║', '.', '║', '.', '║', '.', '║', 'E', 'D', '.', '║', '.', '.', '.'],
                   ['.', '.', '.', '║', '.', '╠', '═', '╩', '═', '╝', '.', '╚', '═', '╩', '═', '╣', '.', '║', '.', '.', '.'],
                   ['.', '.', '.', '║', '.', 'K', 'K', 'D', 'D', '.', '@', '.', '.', '.', 'D', 'D', '.', '║', '.', '.', '.'],
                   ['.', '.', '.', '║', '.', '╠', '═', '╦', '═', '╗', '.', '╔', '═', '╦', '═', '╣', '.', '║', '.', '.', '.'],
-                  ['.', '.', '.', '║', '.', '.', 'K', '║', '█', '║', '.', '║', '█', '║', 'E', 'D', '.', '║', '.', '.', '.'],
+                  ['.', '.', '.', '║', '.', '.', 'K', '║', '.', '║', '.', '║', '.', '║', 'E', 'D', '.', '║', '.', '.', '.'],
                   ['.', '.', '.', '╚', '═', '═', '═', '╬', '═', '╣', '.', '╠', '═', '╬', '═', '═', '═', '╝', '.', '.', '.'],
                   ['.', '.', '.', '.', '.', '.', '.', '║', '.', '║', '.', '║', 'K', '║', '.', '.', '.', '.', '.', '.', '.'],
                   ['.', '.', '.', '.', '.', '.', '.', '║', 'D', '╩', '.', '╩', '.', '║', '.', '.', '.', '.', '.', '.', '.'],
@@ -276,13 +276,16 @@ def print_playarea(left, right):
     global space, dots
     for i in range(y_coord - left, y_coord + right):
         for j in range(x_coord - left, x_coord + right):
+            text = color_check(LEVELS[map_index][i, j])
+            if LEVELS[map_index][i, j] == " ":
+                LEVELS[map_index][i, j] = "*"
             if dots == False:
                 if LEVELS[map_index][i, j] == ".":
                     print(" ", end=space)
                 else:
-                    print(LEVELS[map_index][i, j], end=space)
+                    print(text + LEVELS[map_index][i, j] + bcolors.ENDC, end=space)
             else:
-                print(LEVELS[map_index][i, j], end=space)
+                print(text + LEVELS[map_index][i, j] + bcolors.ENDC, end=space)
         print()
 
 def character_movement(x_dir, y_dir):
@@ -398,7 +401,7 @@ def character_input():
         print("o/O - Ground button: Can be pushed by a box")
         print("D - Door: Needs a key to open it and takes one from you")
         print("B - Box: Used for filling holes and pressing buttons")
-        print("* - Deadly tile: Kills the player and destroys boxes")
+        print("* - Spike: Kills the player and destroys boxes")
         print("Controls:")
         print("WASD for movement of the player")
         print("R to restart level")
