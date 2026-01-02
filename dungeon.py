@@ -279,7 +279,7 @@ def print_playarea(left, right):
         print()
 
 def character_movement(x_dir, y_dir):
-    global key_ammount, map_index, y_coord, x_coord, move_count, all_moves, latch_1, latch_2, latch_3, tic, noclip, god, retry_count
+    global key_ammount, map_index, y_coord, x_coord, move_count, all_moves, latch_1, latch_2, latch_3, tic, noclip, god, retry_count, latch_arr
     move_count += 1
     if (LEVELS[map_index][y_coord + y_dir, x_coord + x_dir] in WALLS or y_coord + y_dir == 17 or LEVELS[map_index][y_coord + y_dir, x_coord + x_dir] == "o") and noclip == 0:
         move_count -= 1
@@ -711,7 +711,7 @@ def map_specific_events():
         LEVELS[map_index][9, 3 + ((spike_count + 4) % 7)] = "*"
         spike_count += 2
     elif map_index == 9:
-        if LEVELS[map_index][10, 11] == "@":
+        if LEVELS[map_index][7, 8] == "@":
             input('Game made by Rhea "Tuxware"')
             print_level(LEVELS[map_index])
 
@@ -720,9 +720,10 @@ print("1. Easy")
 print("2. Medium")
 print("3. Hard")
 print("4. Impossible")
+print("Select difficulty: ")
 
 try:
-    mode = int(input("Select difficulty: "))
+    mode = int(getch.getch())
 except ValueError:
     mode = 1
 
