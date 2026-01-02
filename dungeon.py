@@ -228,7 +228,7 @@ def clear_screen():
         return
     os.system("clear")
 
-def print_level(level):
+def print_level():
     global mode, showpos
     clear_screen()
     if mode == 1:
@@ -313,7 +313,7 @@ def character_movement(x_dir, y_dir):
         key_ammount += 1
     elif LEVELS[map_index][y_coord + y_dir, x_coord + x_dir] == "H" and god == 0:
         LEVELS[map_index][y_coord, x_coord] = "X"
-        print_level(LEVELS[map_index])
+        print_level()
         input("You fell down a hole...")
         map_specific_events()
         retry_count += 1
@@ -324,11 +324,11 @@ def character_movement(x_dir, y_dir):
         latch_arr = [0, 0, 0, 0, 0, 0, 0]
         x_coord, y_coord = coords[map_index, 0], coords[map_index, 1]
         LEVELS[map_index] = copy.deepcopy(LEVELS_START[map_index])
-        print_level(LEVELS[map_index])
+        print_level()
         return
     elif LEVELS[map_index][y_coord + y_dir, x_coord + x_dir] == "*" and god == 0:
         LEVELS[map_index][y_coord, x_coord] = "X"
-        print_level(LEVELS[map_index])
+        print_level()
         input("You Died...")
         map_specific_events()
         retry_count += 1
@@ -338,7 +338,7 @@ def character_movement(x_dir, y_dir):
         latch_arr = [0, 0, 0, 0, 0, 0, 0]
         x_coord, y_coord = coords[map_index, 0], coords[map_index, 1]
         LEVELS[map_index] = copy.deepcopy(LEVELS_START[map_index])
-        print_level(LEVELS[map_index])
+        print_level()
         return
     elif LEVELS[map_index][y_coord + y_dir, x_coord + x_dir] == "E" and noclip == 0:
         pure_deadly_floor = 2
@@ -351,7 +351,7 @@ def character_movement(x_dir, y_dir):
         latch_1 = 0; latch_2 = 0; latch_3 = 0
         latch_arr = [0, 0, 0, 0, 0, 0, 0]
         key_ammount = 0
-        print_level(LEVELS[map_index])
+        print_level()
         return
     x_coord += x_dir; y_coord += y_dir
     LEVELS[map_index][y_coord, x_coord] = "@"
@@ -362,7 +362,7 @@ def character_movement(x_dir, y_dir):
     tic = True
 
 def character_input():
-    global key_ammount, map_index, y_coord, x_coord, move_count, tic, showpos, noclip, noclip_destroy, god, mode, space, dots, retry_count, latch_1, latch_2, latch_3
+    global key_ammount, map_index, y_coord, x_coord, move_count, tic, showpos, noclip, noclip_destroy, god, mode, space, dots, retry_count, latch_1, latch_2, latch_3, latch_arr
     action = getch.getch()
     if action == "r" or action == "R":
         map_specific_events()
@@ -374,7 +374,7 @@ def character_input():
         latch_arr = [0, 0, 0, 0, 0, 0, 0]
         x_coord, y_coord = coords[map_index, 0], coords[map_index, 1]
         LEVELS[map_index] = copy.deepcopy(LEVELS_START[map_index])
-        print_level(LEVELS[map_index])
+        print_level()
         return
     elif action  == "w" or action == "W":
         character_movement(0, -1)
@@ -423,7 +423,7 @@ def character_input():
                 map_specific_events()
                 x_coord, y_coord = coords[map_index, 0], coords[map_index, 1]
                 move_count = 0
-                print_level(LEVELS[map_index])
+                print_level()
             elif command[0].lower() == "setpos":
                 if len(command) < 3:
                     input("Not enough arguments present")
@@ -506,7 +506,7 @@ def map_specific_events():
     if map_index == 1:
         if LEVELS[map_index][3, 9] == "@":
             dots = 0
-            print_level(LEVELS[map_index])
+            print_level()
     if map_index == 3:
         absolute_deadly_floor = abs(pure_deadly_floor - 2)
         absolute_deadly_floor_plus = abs(pure_deadly_floor_plus - 2)
@@ -524,7 +524,7 @@ def map_specific_events():
                 LEVELS[map_index][8, 7] = "B"
                 latch_1 = 1
                 LEVELS[map_index][7, 7] = "@"
-                print_level(LEVELS[map_index])
+                print_level()
             for i in range(2):
                 for j in range(2):
                     if LEVELS[map_index][5 + (i*4), 4 + (j*4)] != "B":
@@ -532,7 +532,7 @@ def map_specific_events():
             if np.count_nonzero(LEVELS[map_index] == "O") == 0:
                 if LEVELS[map_index][2, 12] != "@":
                     LEVELS[map_index][2, 12] = "."
-                print_level(LEVELS[map_index])
+                print_level()
     elif map_index == 4:
         if LEVELS[map_index][1, 11] == "*":
             if latch_1 == 0:
@@ -543,7 +543,7 @@ def map_specific_events():
             LEVELS[map_index][3, 12] = "."
             LEVELS[map_index][5, 12] = "."
             if latch_2 == 0:
-                print_level(LEVELS[map_index])
+                print_level()
                 latch_2 = 1
         absolute_deadly_floor = abs(pure_deadly_floor - 2)
         LEVELS[map_index][8, 10 + absolute_deadly_floor - 1] = "."
@@ -556,11 +556,11 @@ def map_specific_events():
         if LEVELS[map_index][1, 1] == "B":
             LEVELS[map_index][13, 12] = "B"
             LEVELS[map_index][1, 1] = "T"
-            print_level(LEVELS[map_index])
+            print_level()
         if LEVELS[map_index][4, 1] == "B":
             LEVELS[map_index][9, 13] = "B"
             LEVELS[map_index][4, 1] = "t"
-            print_level(LEVELS[map_index])
+            print_level()
         pure_deadly_floor += 1
         LEVELS[map_index][10 + (pure_deadly_floor % 4), 8] = "*"
         LEVELS[map_index][10 + ((pure_deadly_floor - 1) % 4), 8] = "."
@@ -585,32 +585,32 @@ def map_specific_events():
         if x_coord == 13 and y_coord == 13:
             x_coord = 1; y_coord = 1
             LEVELS[map_index][1, 1] = "@"
-            print_level(LEVELS[map_index])
+            print_level()
             return
         elif x_coord == 1 and y_coord == 1:
             x_coord = 13; y_coord = 13
             LEVELS[map_index][13, 13] = "@"
-            print_level(LEVELS[map_index])
+            print_level()
         elif x_coord == 13 and y_coord == 10:
             x_coord = 1; y_coord = 4
             LEVELS[map_index][4, 1] = "@"
-            print_level(LEVELS[map_index])
+            print_level()
             return
         elif x_coord == 1 and y_coord == 4:
             x_coord = 13; y_coord = 10
             LEVELS[map_index][10, 13] = "@"
-            print_level(LEVELS[map_index])
+            print_level()
             return
         if LEVELS[map_index][14, 1] == "*" and latch_1 == 0:
             LEVELS[map_index][12, 1] = "B"
-            print_level(LEVELS[map_index])
+            print_level()
             latch_1 = 1
         if LEVELS[map_index][0, 13] == "*" and latch_2 == 0:
             LEVELS[map_index][1, 12] = "B"
-            print_level(LEVELS[map_index])
+            print_level()
             latch_2 = 1
         if latch_3 == 0:
-            print_level(LEVELS[map_index])
+            print_level()
             latch_3 = 1
     elif map_index == 6:
         LEVELS[map_index][3, 7] = "T"
@@ -618,18 +618,18 @@ def map_specific_events():
         if x_coord == 3 and y_coord == 4:
             x_coord = 7; y_coord = 3
             LEVELS[map_index][3, 7] = "@"
-            print_level(LEVELS[map_index])
+            print_level()
             return
         elif x_coord == 7 and y_coord == 3:
             x_coord = 3; y_coord = 4
             LEVELS[map_index][4, 3] = "@"
-            print_level(LEVELS[map_index])
+            print_level()
             return
         pure_deadly_floor += 1
         if LEVELS[map_index][7, 11] == "*":
             LEVELS[map_index][5, 10] = "."
             if latch_1 == 0:
-                print_level(LEVELS[map_index])
+                print_level()
                 latch_1 = 1
         # Moving killing floors
         LEVELS[map_index][9 - (pure_deadly_floor % 5), 6] = '*'
@@ -664,31 +664,31 @@ def map_specific_events():
         if LEVELS[map_index][0, 1] == "*" and latch_arr[0] == 0:
             LEVELS[map_index][12, 1] = "B"
             latch_arr[0] = 1
-            print_level(LEVELS[map_index])
+            print_level(L)
         elif LEVELS[map_index][14, 1] == "*" and latch_arr[1] == 0:
             LEVELS[map_index][12, 3] = "B"
             latch_arr[1] = 1
-            print_level(LEVELS[map_index])
+            print_level()
         elif LEVELS[map_index][0, 3] == "*" and latch_arr[2] == 0:
             LEVELS[map_index][2, 5] = "B"
             latch_arr[2] = 1
-            print_level(LEVELS[map_index])
+            print_level()
         elif LEVELS[map_index][14, 5] == "*" and latch_arr[3] == 0:
             LEVELS[map_index][12, 7] = "B"
             latch_arr[3] = 1
-            print_level(LEVELS[map_index])
+            print_level()
         elif LEVELS[map_index][0, 7] == "*" and latch_arr[4] == 0:
             LEVELS[map_index][2, 9] = "B"
             latch_arr[4] = 1
-            print_level(LEVELS[map_index])
+            print_level()
         elif LEVELS[map_index][14, 9] == "*" and latch_arr[5] == 0:
             LEVELS[map_index][12, 11] = "B"
             latch_arr[5] = 1
-            print_level(LEVELS[map_index])
+            print_level()
         elif LEVELS[map_index][0, 11] == "*" and latch_arr[6] == 0:
             LEVELS[map_index][2, 13] = "B"
             latch_arr[6] = 1
-            print_level(LEVELS[map_index])
+            print_level()
         spike_count += 1
     elif map_index == 8:
         LEVELS[map_index][13, 4 + ((spike_count - 2) % 9)] = "."
@@ -713,9 +713,15 @@ def map_specific_events():
     elif map_index == 9:
         if LEVELS[map_index][7, 8] == "@":
             input('Game made by Rhea "Tuxware"')
-            print_level(LEVELS[map_index])
+            print_level()
 
 clear_screen()
+print("  .,-::::: :::::::..    :::.  .::    .   .::::::    .,:::::: :::::::..   ")
+print(",;;;'````' ;;;;``;;;;   ;;`;; ';;,  ;;  ;;;' ;;;    ;;;;'''' ;;;;``;;;;  ")
+print("[[[         [[[,/[[['  ,[[ '[[,'[[, [[, [['  [[[     [[cccc   [[[,/[[['  ")
+print("$$$         $$$$$$c   c$$$cc$$$c Y$c$$$c$P   $$'     $$\"\"\"\"   $$$$$$c    ")
+print("`88bo,__,o, 888b \"88bo,888   888, \"88\"888   o88oo,.__888oo,__ 888b \"88bo,")
+print('  "YUMMMMMP"MMMM   "W" YMM   ""`   "M "M"   """"YUMMM""""YUMMMMMMM   "W" ')
 print("1. Easy")
 print("2. Medium")
 print("3. Hard")
@@ -728,7 +734,7 @@ except ValueError:
     mode = 1
 
 while True:
-    print_level(LEVELS[map_index])
+    print_level()
     if tic == True:
         map_specific_events()
     character_input()
