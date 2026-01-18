@@ -29,7 +29,6 @@ Console commands:
 
 Screenshots:  
 <img width="363" height="394" alt="image" src="https://github.com/user-attachments/assets/062546c8-fe2a-48c7-a144-122d10d21f64" />
-
 <img width="363" height="380" alt="image" src="https://github.com/user-attachments/assets/4ba64c4f-441e-4456-8169-1f2523b3d6ff" />
 
 
