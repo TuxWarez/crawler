@@ -730,12 +730,21 @@ print("4. Impossible")
 print("Select difficulty: ")
 
 try:
-    mode = int(msvcrt.getch())
+    mode = int(getch.getch())
 except ValueError:
     mode = 1
+except OverflowError:
+    pass
 
-while True:
-    print_level()
-    if tic == True:
-        map_specific_events()
-    character_input()
+try:
+    while True:
+        print_level()
+        if tic == True:
+            map_specific_events()
+        try:
+            character_input()
+        except OverflowError:
+            pass
+except KeyboardInterrupt:
+    clear_screen()
+    sys.exit()
