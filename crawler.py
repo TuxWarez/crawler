@@ -10,6 +10,7 @@ coords = np.array([[9, 8], [7, 7], [1, 10], [1, 12], [2, 10], [6, 13], [7, 11], 
 mode = 0; tic = True; space = " "
 showpos = 0; noclip = 0; noclip_destroy = 0; god = 0; dots = 1
 INDESTRUCTABLE = ["*", "t", "T"]
+DEADLY = ["*", "="]
 WALLS = np.array(['═', '║', '╚', '╝', '╔', '╗', '╠', '╣', '╩', '╦', '╬'])
 LEVEL_TITLECARD = np.array(["LVL01: Introduction", "LVL02: Four way", "LVL03: Boxes", "LVL04: Buttons", "LVL05: Barb Wire", "LVL06: Back 'n' forth", "LVL07: Dance Floor", "LVL08: Maze", "LVL09: Spiral", "THX: Thanks for playing!"])
 LEVEL_INSTRUCTION = np.array(["@: Player - Moved with WASD controls\nK: Key; D: Door - Can't be passed without a key", "If you get stuck press R to retry the level", "B: Box - Can be pushed by the player\nH: Hole - kills the player and is filled by a box", "*: spike - Kills the player and destroys boxes\no/O: Button - Can be pushed by a box", " ", "T/t: Teleporter", " ", " ", " ", " "])
@@ -207,7 +208,7 @@ def color_check(iterator):
     if iterator == 'K': color = bcolors.GREEN
     elif iterator == 'D': color = bcolors.MAGENTA
     elif iterator == '*': color = bcolors.RED
-    elif iterator == ' ': color = bcolors.ORANGE
+    elif iterator == '=': color = bcolors.ORANGE
     elif iterator == 'C': color = bcolors.YELLOW
     elif iterator == 'X': color = bcolors.RED
     elif iterator == 'B': color = bcolors.BLUE
@@ -235,7 +236,7 @@ def print_level():
         for i in range(len(lvl01)):
             for j in range(len(lvl01)):
                 text = color_check(LEVELS[map_index][i, j])
-                if LEVELS[map_index][i, j] == " ":
+                if LEVELS[map_index][i, j] == "=":
                     LEVELS[map_index][i, j] = "*"
                 if dots == False:
                     if LEVELS[map_index][i, j] == ".":
@@ -301,7 +302,7 @@ def character_movement(x_dir, y_dir):
                 move_count -= 1
                 tic = False
                 return
-            elif LEVELS[map_index][y_coord + y_dir + y_dir, x_coord + x_dir + x_dir] == "*" or LEVELS[map_index][y_coord + y_dir + y_dir, x_coord + x_dir + x_dir] == "o":
+            elif LEVELS[map_index][y_coord + y_dir + y_dir, x_coord + x_dir + x_dir] in DEADLY or LEVELS[map_index][y_coord + y_dir + y_dir, x_coord + x_dir + x_dir] == "o":
                 LEVELS[map_index][y_coord + y_dir + y_dir, x_coord + x_dir + x_dir] = "*"
                 break
             elif LEVELS[map_index][y_coord + y_dir + y_dir, x_coord + x_dir + x_dir] == "H":
@@ -326,7 +327,7 @@ def character_movement(x_dir, y_dir):
         LEVELS[map_index] = copy.deepcopy(LEVELS_START[map_index])
         print_level()
         return
-    elif LEVELS[map_index][y_coord + y_dir, x_coord + x_dir] == "*" and god == 0:
+    elif LEVELS[map_index][y_coord + y_dir, x_coord + x_dir] in DEADLY and god == 0:
         LEVELS[map_index][y_coord, x_coord] = "X"
         print_level()
         input("You Died...")
@@ -636,9 +637,9 @@ def map_specific_events():
         LEVELS[map_index][9 - ((pure_deadly_floor - 1) % 5), 6] = "."
         LEVELS[map_index][9 - ((pure_deadly_floor + 1) % 5), 8] = "*"
         LEVELS[map_index][9 - (pure_deadly_floor % 5), 8] = "."
-        LEVELS[map_index][6, 9 - ((pure_deadly_floor + 1) % 5)] = " "
+        LEVELS[map_index][6, 9 - ((pure_deadly_floor + 1) % 5)] = "="
         LEVELS[map_index][6, 9 - (pure_deadly_floor % 5)] = "."
-        LEVELS[map_index][8, 9 - (pure_deadly_floor % 5)] = " "
+        LEVELS[map_index][8, 9 - (pure_deadly_floor % 5)] = "="
         LEVELS[map_index][8, 9 - ((pure_deadly_floor - 1) % 5)] = "."
     elif map_index == 7:
         LEVELS[map_index][11, 1 + ((spike_count - 1) % 11)] = LEVELS_START[map_index][11, 1 + ((spike_count - 1) % 11)]
