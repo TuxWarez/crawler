@@ -713,7 +713,7 @@ def map_specific_events():
         spike_count += 2
     elif map_index == 9:
         if LEVELS[map_index][7, 8] == "@":
-            input('Game made by Rhea "Tuxware"')
+            input('Demo made by Rea "Tuxware"')
             print_level()
 
 clear_screen()
