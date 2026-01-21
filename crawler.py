@@ -9,7 +9,7 @@ x_coord = 9; y_coord = 8
 coords = np.array([[9, 8], [7, 7], [1, 10], [1, 12], [2, 10], [6, 13], [7, 11], [13, 11], [2, 13], [6, 8]])
 mode = 0; tic = True; space = " "
 showpos = 0; noclip = 0; noclip_destroy = 0; god = 0; dots = 1
-INDESTRUCTABLE = ["*", "t", "T"]
+INDESTRUCTABLE = ["*", "=" "t", "T"]
 DEADLY = ["*", "="]
 WALLS = np.array(['═', '║', '╚', '╝', '╔', '╗', '╠', '╣', '╩', '╦', '╬'])
 LEVEL_TITLECARD = np.array(["LVL01: Introduction", "LVL02: Four way", "LVL03: Boxes", "LVL04: Buttons", "LVL05: Barb Wire", "LVL06: Back 'n' forth", "LVL07: Dance Floor", "LVL08: Maze", "LVL09: Spiral", "THX: Thanks for playing!"])
