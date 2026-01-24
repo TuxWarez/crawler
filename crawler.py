@@ -498,6 +498,7 @@ def character_input():
                     input("No arguments present")
                     return
                 dots = int(command[1])
+            print_level()
         except ValueError:
                 input("There is no digit")
     tic = False
