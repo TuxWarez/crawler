@@ -738,8 +738,8 @@ except OverflowError:
 
 try:
     while True:
-        print_level()
         if tic == True:
+            print_level()
             map_specific_events()
         try:
             character_input()
