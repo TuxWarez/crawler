@@ -635,12 +635,12 @@ def map_specific_events():
                 print_level()
                 latch_1 = 1
         # Moving killing floors
+        LEVELS[map_index][6, 9 - ((pure_deadly_floor + 1) % 5)] = "="
+        LEVELS[map_index][6, 9 - (pure_deadly_floor % 5)] = "."
         LEVELS[map_index][9 - (pure_deadly_floor % 5), 6] = '*'
         LEVELS[map_index][9 - ((pure_deadly_floor - 1) % 5), 6] = "."
         LEVELS[map_index][9 - ((pure_deadly_floor + 1) % 5), 8] = "*"
         LEVELS[map_index][9 - (pure_deadly_floor % 5), 8] = "."
-        LEVELS[map_index][6, 9 - ((pure_deadly_floor + 1) % 5)] = "="
-        LEVELS[map_index][6, 9 - (pure_deadly_floor % 5)] = "."
         LEVELS[map_index][8, 9 - (pure_deadly_floor % 5)] = "="
         LEVELS[map_index][8, 9 - ((pure_deadly_floor - 1) % 5)] = "."
     elif map_index == 7:
@@ -665,7 +665,7 @@ def map_specific_events():
         LEVELS[map_index][3, 1 + ((spike_count + 9) % 13)] = LEVELS_START[map_index][3, 1 + ((spike_count + 9) % 13)]
         LEVELS[map_index][3, 1 + ((spike_count + 10) % 13)] = "*"
         if LEVELS[map_index][0, 1] == "*" and latch_arr[0] == 0:
-            LEVELS[map_index][12, 1] = "B"
+            LEVELS[map_index][4, 1] = "B"
             latch_arr[0] = 1
             print_level()
         elif LEVELS[map_index][14, 1] == "*" and latch_arr[1] == 0:
