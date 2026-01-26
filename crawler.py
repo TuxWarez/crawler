@@ -667,7 +667,7 @@ def map_specific_events():
         if LEVELS[map_index][0, 1] == "*" and latch_arr[0] == 0:
             LEVELS[map_index][12, 1] = "B"
             latch_arr[0] = 1
-            print_level(L)
+            print_level()
         elif LEVELS[map_index][14, 1] == "*" and latch_arr[1] == 0:
             LEVELS[map_index][12, 3] = "B"
             latch_arr[1] = 1
