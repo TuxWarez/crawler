@@ -406,6 +406,7 @@ def character_input():
         print("R to restart level")
         print("C for the console, for which you can find instructions on the github page")
         input("Press Enter to exit this screen")
+        print_screen()
     elif action == "c" or action == "C":
         print("Input a command:")
         try:
