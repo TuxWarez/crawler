@@ -7,9 +7,10 @@ latch_arr = [0, 0, 0, 0, 0, 0, 0]
 deadly_floor = [0, 1, 2]; pure_deadly_floor = 2; pure_deadly_floor_plus = 3; spike_count = 0
 x_coord = 9; y_coord = 8
 coords = np.array([[9, 8], [7, 7], [1, 10], [1, 12], [2, 10], [6, 13], [7, 11], [13, 11], [2, 13], [6, 8]])
-mode = 0; tic = True; space = " "
+tic = True; space = " "
 showpos = 0; noclip = 0; noclip_destroy = 0; god = 0; dots = 1
-INDESTRUCTABLE = ["*", "=" "t", "T"]
+EXTENDABLE = ["═", "╝", "╗", "╣", "╬", "╦", "╩"]
+INDESTRUCTABLE = ["*", "=", "t", "T"]
 DEADLY = ["*", "="]
 WALLS = np.array(['═', '║', '╚', '╝', '╔', '╗', '╠', '╣', '╩', '╦', '╬'])
 LEVEL_TITLECARD = np.array(["LVL01: Introduction", "LVL02: Four way", "LVL03: Boxes", "LVL04: Buttons", "LVL05: Barb Wire", "LVL06: Back 'n' forth", "LVL07: Dance Floor", "LVL08: Maze", "LVL09: Spiral", "THX: Thanks for playing!"])
@@ -34,17 +35,17 @@ lvl01_start = copy.deepcopy(lvl01)
 
 lvl02 = np.array([['.', '.', '.', '.', '╔', '═', '═', '═', '═', '═', '╗', '.', '.', '.', '.'],
                   ['.', '.', '.', '.', '║', 'D', '.', '.', '.', '.', '║', '.', '.', '.', '.'],
-                  ['.', '.', '.', '.', '║', 'K', '╦', '.', '╦', 'D', '║', '.', '.', '.', '.'],
-                  ['.', '.', '.', '.', '║', 'K', '║', '.', '║', 'N', '║', '.', '.', '.', '.'],
+                  ['.', '.', '.', '.', '║', 'K', '║', '.', '║', 'D', '║', '.', '.', '.', '.'],
+                  ['.', '.', '.', '.', '║', 'K', '║', '.', '║', '.', '║', '.', '.', '.', '.'],
                   ['╔', '═', '═', '═', '╬', '═', '╣', '.', '╠', '═', '╬', '═', '═', '═', '╗'],
                   ['║', '.', '.', 'K', '║', '.', '║', '.', '║', '.', '║', 'E', 'D', '.', '║'],
-                  ['║', '.', '╠', '═', '╩', '═', '╝', '.', '╚', '═', '╩', '═', '╣', '.', '║'],
+                  ['║', '.', '═', '═', '╩', '═', '╝', '.', '╚', '═', '╩', '═', '═', '.', '║'],
                   ['║', '.', 'K', 'K', 'D', 'D', '.', '@', '.', '.', '.', 'D', 'D', '.', '║'],
-                  ['║', '.', '╠', '═', '╦', '═', '╗', '.', '╔', '═', '╦', '═', '╣', '.', '║'],
+                  ['║', '.', '═', '═', '╦', '═', '╗', '.', '╔', '═', '╦', '═', '═', '.', '║'],
                   ['║', '.', '.', 'K', '║', '.', '║', '.', '║', '.', '║', 'E', 'D', '.', '║'],
                   ['╚', '═', '═', '═', '╬', '═', '╣', '.', '╠', '═', '╬', '═', '═', '═', '╝'],
                   ['.', '.', '.', '.', '║', '.', '║', '.', '║', 'K', '║', '.', '.', '.', '.'],
-                  ['.', '.', '.', '.', '║', 'D', '╩', '.', '╩', '.', '║', '.', '.', '.', '.'],
+                  ['.', '.', '.', '.', '║', 'D', '║', '.', '║', '.', '║', '.', '.', '.', '.'],
                   ['.', '.', '.', '.', '║', '.', '.', '.', '.', '.', '║', '.', '.', '.', '.'],
                   ['.', '.', '.', '.', '╚', '═', '═', '═', '═', '═', '╝', '.', '.', '.', '.']])
 lvl02_start = copy.deepcopy(lvl02)
@@ -102,7 +103,7 @@ lvl05_start = copy.deepcopy(lvl05)
 
 lvl06 = np.array([['╔', '═', '═', '═', '═', '═', '═', '═', '═', '═', '═', '═', '═', 'o', '╗'],
                   ['║', 'T', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '║'],
-                  ['╚', '═', '═', '═', '╗', '.', '╦', '.', '╔', '═', '═', '═', '╗', '.', '║'],
+                  ['╚', '═', '═', '═', '╗', '.', '║', '.', '╔', '═', '═', '═', '╗', '.', '║'],
                   ['╔', '═', '╗', '.', '║', '.', '║', '.', '║', '╔', '═', '═', '╝', '.', '║'],
                   ['║', 't', '║', '.', '║', '.', '║', '.', '║', '║', '.', '.', '.', '.', '║'],
                   ['║', '.', '║', '.', '╚', '═', '╩', '═', '╝', '╠', '═', '═', '╣', '.', '║'],
@@ -112,7 +113,7 @@ lvl06 = np.array([['╔', '═', '═', '═', '═', '═', '═', '═', '═'
                   ['║', '.', '╠', '═', '═', '╣', '.', '╔', '═', '╦', '═', '╗', '║', '.', '║'],
                   ['║', '.', '.', '.', '.', '║', '.', '║', '.', '║', '.', '║', '║', 't', '║'],
                   ['║', '.', '╔', '═', '═', '╝', '.', '║', '.', '║', '.', '║', '╚', '═', '╝'],
-                  ['║', '.', '║', '╔', '═', '═', '═', '╝', '.', '╩', '.', '╚', '═', '═', '╗'],
+                  ['║', '.', '║', '╔', '═', '═', '═', '╝', '.', '║', '.', '╚', '═', '═', '╗'],
                   ['║', '.', '║', '║', 'E', 'H', '@', '.', '.', '.', '.', '.', '.', 'T', '║'],
                   ['╚', 'o', '╝', '╚', '═', '═', '═', '═', '═', '═', '═', '═', '═', '═', '╝']])
 lvl06_start = copy.deepcopy(lvl06)
@@ -123,7 +124,7 @@ lvl07 = np.array([['.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '
                   ['.', '.', '╔', '═', '╗', '.', '║', 'T', '║', '.', '.', '.', '.', '.', '.'],
                   ['.', '.', '║', 'T', '╠', '═', '╝', '.', '╚', '═', '╦', '═', '╗', '.', '.'],
                   ['.', '.', '║', '.', '║', '.', '.', '.', '.', '.', '║', 'K', '║', '.', '.'],
-                  ['.', '.', '║', '.', '╩', '.', '.', '.', '.', '.', '╠', '═', '╣', '.', '.'],
+                  ['.', '.', '║', '.', '║', '.', '.', '.', '.', '.', '╚', '═', '╣', '.', '.'],
                   ['.', '.', '║', '.', 'B', '.', '.', '.', '.', '.', '.', 'o', '║', '.', '.'],
                   ['.', '.', '╠', '═', '╣', '.', '.', '.', '.', '.', '╔', '═', '╝', '.', '.'],
                   ['.', '.', '║', 'E', 'D', '.', '.', '.', '.', '.', '║', '.', '.', '.', '.'],
@@ -136,7 +137,7 @@ lvl07_start = copy.deepcopy(lvl07)
 
 lvl08 = np.array([['╔', 'o', '╦', 'o', '═', '═', '╦', 'o', '═', '═', '╦', 'o', '═', '═', '╗'],
                   ['║', 'B', '║', '.', '.', '.', '║', '.', '.', '.', '║', '.', '.', '.', '║'],
-                  ['║', '.', '║', '.', '╦', '.', '║', '.', '╦', '.', '║', '.', '╦', '.', '║'],
+                  ['║', '.', '║', '.', '║', '.', '║', '.', '║', '.', '║', '.', '║', '.', '║'],
                   ['║', '.', '║', '.', '║', '.', '║', '.', '║', '.', '║', '.', '║', '.', '║'],
                   ['║', '.', '║', '.', '║', '.', '║', '.', '║', '.', '║', '.', '║', '.', '║'],
                   ['║', '.', '║', '.', '║', '.', '║', '.', '║', '.', '║', '.', '║', '.', '║'],
@@ -146,7 +147,7 @@ lvl08 = np.array([['╔', 'o', '╦', 'o', '═', '═', '╦', 'o', '═', '═
                   ['║', '.', '║', '.', '║', '.', '║', '.', '║', '.', '║', '.', '║', '.', '║'],
                   ['║', '.', '║', '.', '║', '.', '║', '.', '║', '.', '║', '.', '║', '.', '║'],
                   ['║', '.', '║', '.', '║', '.', '║', '.', '║', '.', '║', '.', '║', '@', '║'],
-                  ['║', '.', '╩', '.', '║', '.', '╩', '.', '║', '.', '╩', '.', '║', 'H', '║'],
+                  ['║', '.', '║', '.', '║', '.', '║', '.', '║', '.', '║', '.', '║', 'H', '║'],
                   ['║', '.', '.', '.', '║', '.', '.', '.', '║', '.', '.', '.', '║', 'E', '║'],
                   ['╚', 'o', '═', '═', '╩', 'o', '═', '═', '╩', 'o', '═', '═', '╩', '═', '╝']])
 lvl08_start = copy.deepcopy(lvl08)
@@ -230,28 +231,25 @@ def clear_screen():
     os.system("clear")
 
 def print_level():
-    global mode, showpos
+    global showpos
     clear_screen()
-    if mode == 1:
-        for i in range(len(lvl01)):
-            for j in range(len(lvl01)):
-                text = color_check(LEVELS[map_index][i, j])
-                if LEVELS[map_index][i, j] == "=":
-                    LEVELS[map_index][i, j] = "*"
-                if dots == False:
-                    if LEVELS[map_index][i, j] == ".":
-                        print(" ", end=space)
-                    else:
-                        print(text + LEVELS[map_index][i, j] + bcolors.ENDC, end=space)
+    for i in range(len(lvl01)):
+        for j in range(len(lvl01)):
+            if j + 1 < 15 and LEVELS[map_index][i, j + 1] in EXTENDABLE:
+                rspace = "═"
+            else:
+                rspace = " "
+            text = color_check(LEVELS[map_index][i, j])
+            if LEVELS[map_index][i, j] == "=":
+                LEVELS[map_index][i, j] = "*"
+            if dots == False:
+                if LEVELS[map_index][i, j] == ".":
+                    print(" ", end=rspace)
                 else:
-                    print(text + LEVELS[map_index][i, j] + bcolors.ENDC, end=space)
-            print()
-    elif mode == 3:
-        print_playarea(2, 3)
-    elif mode == 4:
-        print_playarea(1, 2)
-    else:
-        print_playarea(4, 5)
+                    print(text + LEVELS[map_index][i, j] + bcolors.ENDC, end=rspace)
+            else:
+                print(text + LEVELS[map_index][i, j] + bcolors.ENDC, end=rspace)
+        print()
     print(LEVEL_TITLECARD[map_index])
     print(f"KEYS={key_ammount} MOVES={move_count} ALL={all_moves} RETRIES={retry_count}")
     if LEVEL_INSTRUCTION[map_index] != " ":
@@ -363,7 +361,7 @@ def character_movement(x_dir, y_dir):
     tic = True
 
 def character_input():
-    global key_ammount, map_index, y_coord, x_coord, move_count, tic, showpos, noclip, noclip_destroy, god, mode, space, dots, retry_count, latch_1, latch_2, latch_3, latch_arr
+    global key_ammount, map_index, y_coord, x_coord, move_count, tic, showpos, noclip, noclip_destroy, god, space, dots, retry_count, latch_1, latch_2, latch_3, latch_arr, all_moves
     action = getch.getch()
     if action == "r" or action == "R":
         map_specific_events()
@@ -404,9 +402,26 @@ def character_input():
         print("Controls:")
         print("WASD for movement of the player")
         print("R to restart level")
+        print("P to restart to the beginning")
         print("C for the console, for which you can find instructions on the github page")
         input("Press Enter to exit this screen")
         print_screen()
+    elif action == "p" or action == "P":
+        if input("Are you sure? (y/N): ").lower() != "y":
+            print_level()
+            return
+        LEVELS[map_index] = copy.deepcopy(LEVELS_START[map_index])
+        map_index = 0
+        x_coord, y_coord = coords[map_index, 0], coords[map_index, 1]
+        switch_count = 0
+        move_count = 0
+        latch_1 = 0; latch_2 = 0; latch_3 = 0
+        latch_arr = [0, 0, 0, 0, 0, 0, 0]
+        key_ammount = 0
+        all_moves = 0
+        retry_count = 0
+        map_specific_events()
+        print_level()
     elif action == "c" or action == "C":
         print("Input a command:")
         try:
@@ -476,11 +491,6 @@ def character_input():
                     input("No arguments present")
                     return
                 key_ammount = int(command[1])
-            elif command[0].lower() == "changedif":
-                if len(command) < 2:
-                    input("No arguments present")
-                    return
-                mode = int(command[1])
             elif command[0].lower() == "setmove":
                 if len(command) < 2:
                     input("No arguments present")
@@ -506,10 +516,6 @@ def character_input():
 
 def map_specific_events():
     global map_index, move_count, latch_1, deadly_floor, absolute_deadly_floor, pure_deadly_floor, absolute_deadly_floor_plus, pure_deadly_floor_plus, x_coord, y_coord, tic, latch_2, latch_3, spike_count, dots
-    if map_index == 1:
-        if LEVELS[map_index][3, 9] == "@":
-            dots = 0
-            print_level()
     if map_index == 3:
         absolute_deadly_floor = abs(pure_deadly_floor - 2)
         absolute_deadly_floor_plus = abs(pure_deadly_floor_plus - 2)
@@ -553,8 +559,8 @@ def map_specific_events():
         LEVELS[map_index][4 + absolute_deadly_floor - 1, 8] = "."
         pure_deadly_floor = (pure_deadly_floor + 1) % 4
         absolute_deadly_floor = abs(pure_deadly_floor - 2)
-        LEVELS[map_index][4 + absolute_deadly_floor - 1, 8] = "*"
-        LEVELS[map_index][8, 10 + absolute_deadly_floor - 1] = "*"
+        LEVELS[map_index][4 + absolute_deadly_floor - 1, 8] = "="
+        LEVELS[map_index][8, 10 + absolute_deadly_floor - 1] = "="
     elif map_index == 5:
         if LEVELS[map_index][1, 1] == "B":
             LEVELS[map_index][13, 12] = "B"
@@ -719,24 +725,6 @@ def map_specific_events():
             print_level()
 
 clear_screen()
-print("  .,-::::: :::::::..    :::.  .::    .   .::::::    .,:::::: :::::::..   ")
-print(",;;;'````' ;;;;``;;;;   ;;`;; ';;,  ;;  ;;;' ;;;    ;;;;'''' ;;;;``;;;;  ")
-print("[[[         [[[,/[[['  ,[[ '[[,'[[, [[, [['  [[[     [[cccc   [[[,/[[['  ")
-print("$$$         $$$$$$c   c$$$cc$$$c Y$c$$$c$P   $$'     $$\"\"\"\"   $$$$$$c    ")
-print("`88bo,__,o, 888b \"88bo,888   888, \"88\"888   o88oo,.__888oo,__ 888b \"88bo,")
-print('  "YUMMMMMP"MMMM   "W" YMM   ""`   "M "M"   """"YUMMM""""YUMMMMMMM   "W" ')
-print("1. Easy")
-print("2. Medium")
-print("3. Hard")
-print("4. Impossible")
-print("Select difficulty: ")
-
-try:
-    mode = int(getch.getch())
-except ValueError:
-    mode = 1
-except OverflowError:
-    pass
 
 try:
     while True:
