@@ -6,7 +6,7 @@ latch_1 = 0; latch_2 = 0; latch_3 = 0
 latch_arr = [0, 0, 0, 0, 0, 0, 0]
 deadly_floor = [0, 1, 2]; pure_deadly_floor = 2; pure_deadly_floor_plus = 3; spike_count = 0
 x_coord = 9; y_coord = 8
-coords = np.array([[9, 8], [7, 7], [1, 10], [1, 12], [2, 10], [6, 13], [7, 11], [13, 11], [2, 13], [6, 8]])
+coords = np.array([[9, 8], [7, 7], [1, 10], [1, 12], [2, 10], [5, 13], [7, 11], [13, 11], [2, 13], [6, 8]])
 tic = True; space = " "
 showpos = 0; noclip = 0; noclip_destroy = 0; god = 0; dots = 1
 EXTENDABLE = ["═", "╝", "╗", "╣", "╬", "╦", "╩"]
@@ -110,11 +110,11 @@ lvl06 = np.array([['╔', '═', '═', '═', '═', '═', '═', '═', '═'
                   ['║', 'B', '║', '.', '.', '.', '.', '.', '.', '║', '.', '.', '.', '.', '║'],
                   ['║', '.', '╚', '═', '═', '╗', '.', '.', '.', '╚', '═', '═', '╗', '.', '║'],
                   ['║', '.', '.', '.', '.', '║', '.', '.', '.', '.', '.', '.', '║', '.', '║'],
-                  ['║', '.', '╠', '═', '═', '╣', '.', '╔', '═', '╦', '═', '╗', '║', '.', '║'],
-                  ['║', '.', '.', '.', '.', '║', '.', '║', '.', '║', '.', '║', '║', 't', '║'],
-                  ['║', '.', '╔', '═', '═', '╝', '.', '║', '.', '║', '.', '║', '╚', '═', '╝'],
-                  ['║', '.', '║', '╔', '═', '═', '═', '╝', '.', '║', '.', '╚', '═', '═', '╗'],
-                  ['║', '.', '║', '║', 'E', 'H', '@', '.', '.', '.', '.', '.', '.', 'T', '║'],
+                  ['║', '.', '╠', '═', '═', '╣', '╔', '═', '╦', '═', '╗', '.', '║', '.', '║'],
+                  ['║', '.', '.', '.', '.', '║', '║', '.', '║', '.', '║', '.', '║', 't', '║'],
+                  ['║', '.', '╔', '═', '═', '╝', '║', '.', '║', '.', '║', '.', '╚', '═', '╝'],
+                  ['║', '.', '║', '╔', '═', '═', '╝', '.', '║', '.', '╚', '═', '═', '═', '╗'],
+                  ['║', '.', '║', 'E', 'H', '@', '.', '.', '.', '.', '.', '.', '.', 'T', '║'],
                   ['╚', 'o', '╝', '╚', '═', '═', '═', '═', '═', '═', '═', '═', '═', '═', '╝']])
 lvl06_start = copy.deepcopy(lvl06)
 
@@ -570,11 +570,38 @@ def map_specific_events():
             LEVELS[map_index][9, 13] = "B"
             LEVELS[map_index][4, 1] = "t"
             print_level()
+        if x_coord == 13 and y_coord == 13:
+            x_coord = 1; y_coord = 1
+            LEVELS[map_index][1, 1] = "@"
+            print_level()
+        elif x_coord == 1 and y_coord == 1:
+            x_coord = 13; y_coord = 13
+            LEVELS[map_index][13, 13] = "@"
+            print_level()
+        elif x_coord == 13 and y_coord == 10:
+            x_coord = 1; y_coord = 4
+            LEVELS[map_index][4, 1] = "@"
+            print_level()
+        elif x_coord == 1 and y_coord == 4:
+            x_coord = 13; y_coord = 10
+            LEVELS[map_index][10, 13] = "@"
+            print_level()
+        if LEVELS[map_index][14, 1] == "*" and latch_1 == 0:
+            LEVELS[map_index][12, 1] = "B"
+            print_level()
+            latch_1 = 1
+        if LEVELS[map_index][0, 13] == "*" and latch_2 == 0:
+            LEVELS[map_index][1, 12] = "B"
+            print_level()
+            latch_2 = 1
+        if latch_3 == 0:
+            print_level()
+            latch_3 = 1
         pure_deadly_floor += 1
-        LEVELS[map_index][10 + (pure_deadly_floor % 4), 8] = "*"
-        LEVELS[map_index][10 + ((pure_deadly_floor - 1) % 4), 8] = "."
-        LEVELS[map_index][10 + ((pure_deadly_floor + 1) % 4), 10] = "*"
-        LEVELS[map_index][10 + (pure_deadly_floor % 4), 10] = "."
+        LEVELS[map_index][10 + (pure_deadly_floor % 4), 7] = "*"
+        LEVELS[map_index][10 + ((pure_deadly_floor - 1) % 4), 7] = "."
+        LEVELS[map_index][10 + ((pure_deadly_floor + 1) % 4), 9] = "*"
+        LEVELS[map_index][10 + (pure_deadly_floor % 4), 9] = "."
         LEVELS[map_index][4 - ((pure_deadly_floor + 1) % 4), 5] = "*"
         LEVELS[map_index][4 - (pure_deadly_floor % 4), 5] = "."
         LEVELS[map_index][4 - ((pure_deadly_floor + 2) % 4), 7] = "*"
@@ -591,36 +618,6 @@ def map_specific_events():
         LEVELS[map_index][1, 1] = "T"
         LEVELS[map_index][10, 13] = "t"
         LEVELS[map_index][4, 1] = "t"
-        if x_coord == 13 and y_coord == 13:
-            x_coord = 1; y_coord = 1
-            LEVELS[map_index][1, 1] = "@"
-            print_level()
-            return
-        elif x_coord == 1 and y_coord == 1:
-            x_coord = 13; y_coord = 13
-            LEVELS[map_index][13, 13] = "@"
-            print_level()
-        elif x_coord == 13 and y_coord == 10:
-            x_coord = 1; y_coord = 4
-            LEVELS[map_index][4, 1] = "@"
-            print_level()
-            return
-        elif x_coord == 1 and y_coord == 4:
-            x_coord = 13; y_coord = 10
-            LEVELS[map_index][10, 13] = "@"
-            print_level()
-            return
-        if LEVELS[map_index][14, 1] == "*" and latch_1 == 0:
-            LEVELS[map_index][12, 1] = "B"
-            print_level()
-            latch_1 = 1
-        if LEVELS[map_index][0, 13] == "*" and latch_2 == 0:
-            LEVELS[map_index][1, 12] = "B"
-            print_level()
-            latch_2 = 1
-        if latch_3 == 0:
-            print_level()
-            latch_3 = 1
     elif map_index == 6:
         LEVELS[map_index][3, 7] = "T"
         LEVELS[map_index][4, 3] = "T"
