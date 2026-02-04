@@ -510,6 +510,11 @@ def character_input():
                     return
                 dots = int(command[1])
             print_level()
+            elif command[0].lower() == "maplist":
+                clear_screen()
+                for i in LEVEL_TITLECARD:
+                    print(i)
+                input("Press Enter to exit: ")
         except ValueError:
                 input("There is no digit")
     tic = False
