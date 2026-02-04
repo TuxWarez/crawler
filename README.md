@@ -23,10 +23,9 @@ Console commands:
 `god` \[0|1] - Makes the player invincible  
 `summon` \[Character] optional\[x-coord] \[y-coord]- Summons a character below the player; if the coordinates are present, it summons a character at the specified coordinates  
 `setkey` \[ammount] - Sets a specified ammount of keys in the player inventory  
-`changedif` \[1|2|3|4] - Changes the difficulty on the fly  
-`setmove` \[ammount] - Sets a specified ammount of moves in the player inventory   
-`space` \[0|1] - Sets if there will be space in between characters  
+`setmove` \[ammount] - Sets a specified ammount of moves in the player inventory  
 `dots` \[0|1] - Sets if the dots are printed on the screen  
+`maplist` - Prints all level titlecards on the screen
 
 Screenshots:  
 <img width="363" height="394" alt="image" src="https://github.com/user-attachments/assets/062546c8-fe2a-48c7-a144-122d10d21f64" />
