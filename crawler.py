@@ -496,14 +496,6 @@ def character_input():
                     input("No arguments present")
                     return
                 move_count = int(command[1])
-            elif command[0].lower() == "space":
-                if len(command) < 2:
-                    input("No arguments present")
-                    return
-                if command[1] == "1":
-                    space = " "
-                    return
-                space = ""
             elif command[0].lower() == "dots":
                 if len(command) < 2:
                     input("No arguments present")
