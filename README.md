@@ -1,3 +1,5 @@
+The full game can be found at: https://tuxware.itch.io/crawler  
+
 Legend for the game:  
 @ - Player  
 K - Key  
