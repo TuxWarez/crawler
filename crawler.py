@@ -405,7 +405,7 @@ def character_input():
         print("P to restart to the beginning")
         print("C for the console, for which you can find instructions on the github page")
         input("Press Enter to exit this screen")
-        print_screen()
+        print_level()
     elif action == "p" or action == "P":
         if input("Are you sure? (y/N): ").lower() != "y":
             print_level()
