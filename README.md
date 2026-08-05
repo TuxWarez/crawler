@@ -9,6 +9,7 @@ o/O - Button: Can be pushed by a box
 D - Door: Needs a key to open it and takes one from you  
 B - Box: Used for filling holes and pressing buttons  
 \* - Deadly tile: Kills the player and destroys boxes  
++ - Checkpoint  
 Controls:  
 WASD for movement of the player  
 R to restart level  
